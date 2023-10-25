@@ -11,10 +11,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eef8de86-6063-4eb0-91b1-2cdfc96e3fd8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Data/Repositories/BaseRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Repositories/IPokemonRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Repositories/IPokemonStatsRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/EfCoreContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/EfCoreContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PokeChopShop/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PokeChopShop/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApplication1/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +173,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1698222317544</updated>
-      <workItem from="1698222319752" duration="7495000" />
+      <workItem from="1698222319752" duration="8856000" />
     </task>
     <servers />
   </component>

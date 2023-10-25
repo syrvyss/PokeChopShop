@@ -1,7 +1,11 @@
+using Data.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
+builder.Services.AddScoped<IPokemonStatsRepository, PokemonStatsRepository>();
 
 var app = builder.Build();
 

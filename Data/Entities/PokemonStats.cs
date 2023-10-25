@@ -11,5 +11,5 @@ public class PokemonStats
 
     // Navigation
     public int PokemonId { get; set; }
-    public Pokemon Pokemon { get; set; }
+    public Pokemon Pokemon { get; set; } = null;
 }

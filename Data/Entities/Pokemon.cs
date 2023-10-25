@@ -7,5 +7,6 @@ public class Pokemon
 
     public string Url { get; set; }
 
+    // Navigation
     public PokemonStats PokemonStats { get; set; }
 }

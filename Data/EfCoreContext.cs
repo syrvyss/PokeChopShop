@@ -7,6 +7,7 @@ namespace Data;
 public class EfCoreContext : DbContext
 {
     public DbSet<Pokemon> Pokemon => Set<Pokemon>();
+    public DbSet<PokemonStats> PokemonStats => Set<PokemonStats>();
 
     public EfCoreContext(DbContextOptions<EfCoreContext> options)
         : base(options)

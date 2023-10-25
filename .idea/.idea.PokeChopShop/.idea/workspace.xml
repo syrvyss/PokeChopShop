@@ -14,10 +14,7 @@
       <change afterPath="$PROJECT_DIR$/Data/Repositories/BaseRepository.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Data/Repositories/IPokemonRepository.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Data/Repositories/IPokemonStatsRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Repositories/PokemonStatsRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/EfCoreContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/EfCoreContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Entities/Pokemon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Pokemon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Entities/PokemonStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/PokemonStats.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +175,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1698222317544</updated>
-      <workItem from="1698222319752" duration="7027000" />
+      <workItem from="1698222319752" duration="7495000" />
     </task>
     <servers />
   </component>

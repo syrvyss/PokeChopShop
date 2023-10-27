@@ -11,50 +11,84 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eef8de86-6063-4eb0-91b1-2cdfc96e3fd8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Data/Configuration/OrderConfiguration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/Entities/CustomerInformation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/Entities/Order.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/Repositories/IOrderRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/Repositories/OrderRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UnitTests/UnitTests/PokemonTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PokeChopShop/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PokeChopShop/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApplication1/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApplication1/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Data.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/EfCoreContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/EfCoreContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokeChopShop.sln" beforeDir="false" afterPath="$PROJECT_DIR$/PokeChopShop.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;syrvyss&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="7baf6532-1637-4a28-9780-4cfd66895402" />
+        <option name="url" value="https://github.com/syrvyss/PokeChopShop.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2c2f0d9daa9545dab4ac2f6fdc39f1b2a20000/38/e1cbedb2/InvalidOperationException.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/365e7bc9bffff1bafa87f3989c799d3c7a4826916528d1c169b5d6835d78978/EntityTypeBuilder`.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="SWEA" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2XFQOJ7AzfGTMm7rkHkVDnVGGE0" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "rider.code.cleanup.on.save": "true",
-    "rider.code.cleanup.on.save.profile": "Built-in: Reformat & Apply Syntax Style",
-    "settings.editor.selected.configurable": "preferences.general",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/add__dependency__injection&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;rider.code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;rider.code.cleanup.on.save.profile&quot;: &quot;Built-in: Reformat &amp; Apply Syntax Style&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;RiderDotCoverFilteringPageId&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "/Users/dkNikLue/Library/Application Support/JetBrains/Rider2023.2/resharper-host/DecompilerCache",
-      "/Users/dkNikLue/Library/Application Support/JetBrains/Rider2023.2/resharper-host/SourcesCache",
-      "/Users/dkNikLue/.local/share/Symbols/src"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ],
+    &quot;rider.external.source.directories&quot;: [
+      &quot;/Users/dkNikLue/Library/Application Support/JetBrains/Rider2023.2/resharper-host/DecompilerCache&quot;,
+      &quot;/Users/dkNikLue/Library/Application Support/JetBrains/Rider2023.2/resharper-host/SourcesCache&quot;,
+      &quot;/Users/dkNikLue/.local/share/Symbols/src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.PokeChopShop: http">
     <configuration default="true" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/WebApplication1/bin/Debug/net7.0/WebApplication1" />
@@ -173,12 +207,22 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1698222317544</updated>
-      <workItem from="1698222319752" duration="8856000" />
+      <workItem from="1698222319752" duration="40439000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnitTestsCoverage.Settings">
+    <option name="coveragePercentColumnWidth" value="150" />
+    <option name="sortOrder" value="DESCENDING" />
+    <option name="sortedColumn" value="1" />
+    <option name="symbolColumnWidth" value="262" />
+    <coverage-tree-state>
+      <expand />
+      <select />
+    </coverage-tree-state>
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="VcsManagerConfiguration">

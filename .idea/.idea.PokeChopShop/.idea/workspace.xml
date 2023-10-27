@@ -11,13 +11,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eef8de86-6063-4eb0-91b1-2cdfc96e3fd8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Data/Configuration/OrderConfiguration.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Entities/CustomerInformation.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Entities/Order.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Repositories/IOrderRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Repositories/OrderRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UnitTests/UnitTests/PokemonTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.PokeChopShop/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PokeChopShop/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Data.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/EfCoreContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/EfCoreContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PokeChopShop.sln" beforeDir="false" afterPath="$PROJECT_DIR$/PokeChopShop.sln" afterDir="false" />
@@ -218,7 +211,7 @@
     <option name="coveragePercentColumnWidth" value="150" />
     <option name="sortOrder" value="DESCENDING" />
     <option name="sortedColumn" value="1" />
-    <option name="symbolColumnWidth" value="262" />
+    <option name="symbolColumnWidth" value="355" />
     <coverage-tree-state>
       <expand />
       <select />

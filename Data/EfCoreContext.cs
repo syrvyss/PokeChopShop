@@ -1,8 +1,24 @@
+﻿using System.Net;
+using System.Text.Json;
 using Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Logging;
 
 namespace Data;
+
+public class EfCoreContextFactory : IDesignTimeDbContextFactory<EfCoreContext>
+{
+    public EfCoreContext CreateDbContext(string[] args)
+    {
+        var builder = new DbContextOptionsBuilder<EfCoreContext>();
+        builder
+            .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
+            .UseNpgsql(
+                "Host=localhost;Database=postgres;Username=dkNikLue;Password=12345");
+        return new EfCoreContext(builder.Options);
+    }
+}
 
 public class EfCoreContext : DbContext
 {
@@ -18,13 +34,26 @@ public class EfCoreContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information);
+        if (!optionsBuilder.IsConfigured)
+        {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+            optionsBuilder
+                .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
+                .UseNpgsql(
+                    "Host=localhost;Database=postgres;Username=dkNikLue;Password=12345");
+        }
+
         base.OnConfiguring(optionsBuilder);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(Configuration.EfCoreContext).Assembly);
+
+        SeedDataAsync(modelBuilder).GetAwaiter().GetResult();
+    }
+
     private async Task SeedDataAsync(ModelBuilder modelBuilder)
     {
         // Adding example orders

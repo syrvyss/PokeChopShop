@@ -11,9 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eef8de86-6063-4eb0-91b1-2cdfc96e3fd8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Data/Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Data.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/EfCoreContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/EfCoreContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PokeChopShop.sln" beforeDir="false" afterPath="$PROJECT_DIR$/PokeChopShop.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

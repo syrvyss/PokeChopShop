@@ -1,14 +1,16 @@
 using Data.Entities;
 using Data.Repositories;
+using Data.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Npgsql.PostgresTypes;
 
 namespace UnitTests;
 
 public class Pokemon_Tests
 {
     [Fact]
-    public void Should_CreatePokemonSuccessfully()
+    public async void Should_CreatePokemonSuccessfully()
     {
         // Arrange
         var options = new DbContextOptionsBuilder<Data.EfCoreContext>()
@@ -22,7 +24,7 @@ public class Pokemon_Tests
         {
             Id = 1,
             Name = "Bulbasaur",
-            Url = "https://pokeapi.co/api/v2/pokemon/1"
+            Sprite = await Sprite.GetSprite("https://pokeapi.co/api/v2/pokemon/1")
         };
 
         // Act
@@ -33,7 +35,7 @@ public class Pokemon_Tests
     }
 
     [Fact]
-    public void Should_GetAllOrdersSuccessfully()
+    public async void Should_GetAllOrdersSuccessfully()
     {
         // Arrange
         var options = new DbContextOptionsBuilder<Data.EfCoreContext>()
@@ -47,14 +49,14 @@ public class Pokemon_Tests
         {
             Id = 1,
             Name = "Bulbasaur",
-            Url = "https://pokeapi.co/api/v2/pokemon/1"
+            Sprite = await Sprite.GetSprite("https://pokeapi.co/api/v2/pokemon/1")
         };
 
         var pokemon2 = new Pokemon
         {
             Id = 2,
             Name = "Ivysaur",
-            Url = "https://pokeapi.co/api/v2/pokemon/2"
+            Sprite = await Sprite.GetSprite("https://pokeapi.co/api/v2/pokemon/2")
         };
 
         repository.Add(pokemon1);
@@ -68,7 +70,7 @@ public class Pokemon_Tests
     }
 
     [Fact]
-    public void Should_UpdateOrderSuccessfully()
+    public async void Should_UpdateOrderSuccessfully()
     {
         // Arrange
         var options = new DbContextOptionsBuilder<Data.EfCoreContext>()
@@ -82,7 +84,7 @@ public class Pokemon_Tests
         {
             Id = 1,
             Name = "Bulbasaur",
-            Url = "https://pokeapi.co/api/v2/pokemon/1"
+            Sprite = await Sprite.GetSprite("https://pokeapi.co/api/v2/pokemon/1")
         };
 
         repository.Add(pokemon1);
@@ -98,7 +100,7 @@ public class Pokemon_Tests
     }
 
     [Fact]
-    public void Should_DeleteOrderSuccessfully()
+    public async void Should_DeleteOrderSuccessfully()
     {
         // Arrange
         var options = new DbContextOptionsBuilder<Data.EfCoreContext>()
@@ -112,7 +114,7 @@ public class Pokemon_Tests
         {
             Id = 1,
             Name = "Bulbasaur",
-            Url = "https://pokeapi.co/api/v2/pokemon/1"
+            Sprite = await Sprite.GetSprite("https://pokeapi.co/api/v2/pokemon/1")
         };
 
         // Act

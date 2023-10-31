@@ -101,7 +101,7 @@ namespace Data.Migrations
                             CardDetails = "1234567891234567",
                             CustomerInformationId = 0,
                             Email = "a@gmail.com",
-                            OrderDate = new DateTime(2023, 10, 27, 8, 24, 4, 680, DateTimeKind.Utc).AddTicks(2920),
+                            OrderDate = new DateTime(2023, 10, 31, 10, 25, 21, 711, DateTimeKind.Utc).AddTicks(860),
                             PokemonId = 1,
                             SocialSecurity = "1234567891"
                         });
@@ -122,7 +122,7 @@ namespace Data.Migrations
                     b.Property<int?>("OrderId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Url")
+                    b.Property<string>("Sprite")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -137,7 +137,7 @@ namespace Data.Migrations
                         {
                             Id = 1,
                             Name = "Bulbasaur",
-                            Url = "https://pokeapi.co/api/v2/pokemon/1"
+                            Sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
                         });
                 });
 

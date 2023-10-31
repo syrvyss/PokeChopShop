@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 using Data.Entities;
+using Data.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Logging;
@@ -89,11 +90,12 @@ public class EfCoreContext : DbContext
             PokemonId = 1
         };
 
+        var sprite = await Sprite.GetSprite("https://pokeapi.co/api/v2/pokemon/1");
         var pokemon1 = new Pokemon
         {
             Id = 1,
             Name = "Bulbasaur",
-            Url = "https://pokeapi.co/api/v2/pokemon/1"
+            Sprite = sprite
         };
 
         modelBuilder.Entity<PokemonStats>().HasData(pokemonStats1);

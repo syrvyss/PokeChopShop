@@ -58,7 +58,7 @@ namespace Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Url = table.Column<string>(type: "text", nullable: false),
+                    Sprite = table.Column<string>(type: "text", nullable: false),
                     OrderId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -97,12 +97,12 @@ namespace Data.Migrations
             migrationBuilder.InsertData(
                 table: "Order",
                 columns: new[] { "Id", "CardDetails", "CustomerInformationId", "Email", "OrderDate", "PokemonId", "SocialSecurity" },
-                values: new object[] { 1, "1234567891234567", 0, "a@gmail.com", new DateTime(2023, 10, 27, 8, 24, 4, 680, DateTimeKind.Utc).AddTicks(2920), 1, "1234567891" });
+                values: new object[] { 1, "1234567891234567", 0, "a@gmail.com", new DateTime(2023, 10, 31, 10, 25, 21, 711, DateTimeKind.Utc).AddTicks(860), 1, "1234567891" });
 
             migrationBuilder.InsertData(
                 table: "Pokemon",
-                columns: new[] { "Id", "Name", "OrderId", "Url" },
-                values: new object[] { 1, "Bulbasaur", null, "https://pokeapi.co/api/v2/pokemon/1" });
+                columns: new[] { "Id", "Name", "OrderId", "Sprite" },
+                values: new object[] { 1, "Bulbasaur", null, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" });
 
             migrationBuilder.InsertData(
                 table: "CustomerInformation",

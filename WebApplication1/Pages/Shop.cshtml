@@ -1,0 +1,33 @@
+@page
+@using Data.Repositories
+@model PokeChopShop.Pages.Shop
+@inject IPokemonRepository PokemonRepository
+
+@{
+    ViewData["Title"] = "Shop";
+}
+
+<img src="public/look.svg" alt="" class="w-100 h-100 p-5 m-1 overflow-auto">
+
+<div class="container m-0 w-100">
+    @foreach (var item in PokemonRepository.GetAll())
+    {
+        <div class="card col-6 col-md-4 col-lg-3 text-bg-dark">
+            <img src="@item.Sprite" class="card-img" alt="...">
+            <div class="card-img-overlay d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-between">
+                    <small>
+                        <p>Organic</p>
+                    </small>
+                    <small>
+                        <p>Save up to 20%!</p>
+                    </small>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <h2 class="card-title fw-bolder">@item.Name</h2>
+                    <p class="card-text text-center">Weight:</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

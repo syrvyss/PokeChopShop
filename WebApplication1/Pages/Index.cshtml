@@ -4,7 +4,27 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<header class="px-5">
+    <img src="public/chop.svg" alt="" class="w-100 h-100 p-5 m-1 overflow-auto">
+    <h1 class="text-dark fw-bolder text-black-50">
+        A yummy butcher with all the highest quality meats!
+        <br>
+        <span class="mx-5">the dumb animals don't feel pain, do not worry.</span>
+    </h1>
+
+    <a href="/about" class="mx-5 text-black-50 fw-bolder fs-3 mt-5">Learn more about our approach to bringing you our highest quality wares.</a>
+</header>
+
+<article class="px-5">
+    <section class="vh-100 w-100 d-flex flex-column">
+        <div class="my-auto d-flex flex-column justify-content-end">
+            <h1 class="text-dark text-end fw-bolder text-black-50">
+                We have the highest selection anywhere!
+                <br>
+                <span class="mx-5">The only lawful butcher store in this neighbourhood.</span>
+            </h1>
+            <a href="/shop" class="mx-5 text-end text-black-50 fw-bolder fs-3">Take a look at the amazing selection of meats.</a>
+        </div>
+
+    </section>
+</article>

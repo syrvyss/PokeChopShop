@@ -9,19 +9,51 @@
     <link rel="stylesheet" href="~/PokeChopShop.styles.css" asp-append-version="true"/>
 </head>
 <body>
-<header>
-    <div class="w-full bg-warning">
-        <p class="text-center">🔥 Big ongoing sale! Up to 20% off! 🔥</p>
+<header class="sticky-md-top">
+    <div class="w-100 bg-warning px-0 py-1">
+        <a href="#" class="link-dark text-reset text-decoration-none h-100">
+            <p class="text-center text-white fw-bold my-auto">🔥 Big ongoing sale! Up to 20% off! 🔥</p>
+        </a>
     </div>
-    <nav class="navbar bg-info">
-        <div class="container-fluid bg-info">
-            <a href="#" class="navbar-brand">
-                PokeChopShop
-            </a>
-            <div class="d-flex">
-                <a href="#">Shop</a>
-                <a href="#">Shop</a>
-                <a href="#">Shop</a>
+
+    <nav class="navbar navbar-expand-md w-100 p-0 bg-opacity-75 bg-white" style="backdrop-filter: blur(10px);">
+        <div class="p-0 container-fluid">
+            <div class="navbar-nav w-100">
+                <a href="/" class="navbar-brand text-black fw-bolder p-4">
+                    PokeChop Shop
+                </a>
+
+                <div class="collapse navbar-collapse text-md-center d-md-flex justify-content-sm-end text-sm-center" id="navbarToggler">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link fw-bold text-black">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link fw-bold text-black">
+                            About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+
+                        <a href="/shop" class="nav-link fw-bold text-black">
+                            Shop
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link fw-bold text-black">
+                            Shipping
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link fw-bold text-black">
+                            Admin <span class="small fst-italic">(please don't click if you are not an admin)</span>
+                        </a>
+                    </li>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                </button>
             </div>
         </div>
     </nav>
@@ -32,6 +64,7 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 
+@RenderBody()
 @await RenderSectionAsync("Scripts", false)
 </body>
 </html>

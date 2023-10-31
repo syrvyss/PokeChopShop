@@ -14,7 +14,7 @@ public partial class EfCoreContext
 
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name);
-            builder.Property(x => x.Url);
+            builder.Property(x => x.Sprite);
 
             builder
                 .HasOne(x => x.PokemonStats)

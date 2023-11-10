@@ -4,6 +4,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Data.Migrations
 {
     /// <inheritdoc />
@@ -20,6 +22,7 @@ namespace Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     CardDetails = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
+                    Price = table.Column<double>(type: "double precision", nullable: false),
                     SocialSecurity = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     OrderDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     PokemonId = table.Column<int>(type: "integer", nullable: false),
@@ -96,13 +99,21 @@ namespace Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Order",
-                columns: new[] { "Id", "CardDetails", "CustomerInformationId", "Email", "OrderDate", "PokemonId", "SocialSecurity" },
-                values: new object[] { 1, "1234567891234567", 0, "a@gmail.com", new DateTime(2023, 10, 31, 10, 25, 21, 711, DateTimeKind.Utc).AddTicks(860), 1, "1234567891" });
+                columns: new[] { "Id", "CardDetails", "CustomerInformationId", "Email", "OrderDate", "PokemonId", "Price", "SocialSecurity" },
+                values: new object[] { 1, "1234567891234567", 0, "a@gmail.com", new DateTime(2023, 11, 8, 21, 23, 26, 88, DateTimeKind.Utc).AddTicks(8940), 1, 0.0, "1234567891" });
 
             migrationBuilder.InsertData(
                 table: "Pokemon",
                 columns: new[] { "Id", "Name", "OrderId", "Sprite" },
-                values: new object[] { 1, "Bulbasaur", null, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" });
+                values: new object[,]
+                {
+                    { 1, "Bulbasaur", null, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" },
+                    { 2, "Ivysaur", null, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png" },
+                    { 3, "Venusaur", null, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png" },
+                    { 4, "Charmander", null, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" },
+                    { 5, "Charmeleon", null, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png" },
+                    { 6, "Charizard", null, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png" }
+                });
 
             migrationBuilder.InsertData(
                 table: "CustomerInformation",
@@ -112,7 +123,15 @@ namespace Data.Migrations
             migrationBuilder.InsertData(
                 table: "PokemonStats",
                 columns: new[] { "Id", "Description", "Experience", "Height", "PokemonId", "Weight" },
-                values: new object[] { 1, "A grass and poison type Pokémon.", 64, 7, 1, 69 });
+                values: new object[,]
+                {
+                    { 1, "A grass and poison type Pokémon.", 64, 7, 1, 69 },
+                    { 2, "Evolution of Bulbasaur.", 100, 10, 2, 100 },
+                    { 3, "Final evolution of Bulbasaur.", 103, 13, 3, 130 },
+                    { 4, "A fire-type Pokémon.", 120, 6, 4, 85 },
+                    { 5, "Evolution of Charmander.", 140, 11, 5, 190 },
+                    { 6, "Final evolution of Charmander.", 200, 17, 6, 905 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CustomerInformation_OrderId",

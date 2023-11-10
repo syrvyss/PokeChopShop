@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Text.Json;
 using Data.Entities;
 using Data.Utility;
@@ -72,8 +72,7 @@ public class EfCoreContext : DbContext
             Email = "a@gmail.com",
             CardDetails = "1234567891234567",
             SocialSecurity = "1234567891",
-            OrderDate = DateTime.UtcNow,
-            PokemonId = 1
+            OrderDate = DateTime.UtcNow
         };
 
         modelBuilder.Entity<CustomerInformation>().HasData(customerInformation1);
@@ -100,5 +99,115 @@ public class EfCoreContext : DbContext
 
         modelBuilder.Entity<PokemonStats>().HasData(pokemonStats1);
         modelBuilder.Entity<Pokemon>().HasData(pokemon1);
+
+        // Pokémon 2 - Ivysaur
+        var pokemonStats2 = new PokemonStats
+        {
+            Id = 2,
+            Experience = 100,
+            Height = 10,
+            Weight = 100,
+            Description = "Evolution of Bulbasaur.",
+            PokemonId = 2
+        };
+
+        var sprite2 = await Sprite.GetSprite("https://pokeapi.co/api/v2/pokemon/2");
+        var pokemon2 = new Pokemon
+        {
+            Id = 2,
+            Name = "Ivysaur",
+            Sprite = sprite2
+        };
+
+        modelBuilder.Entity<PokemonStats>().HasData(pokemonStats2);
+        modelBuilder.Entity<Pokemon>().HasData(pokemon2);
+
+        // Pokémon 3 - Venusaur
+        var pokemonStats3 = new PokemonStats
+        {
+            Id = 3,
+            Experience = 103,
+            Height = 13,
+            Weight = 130,
+            Description = "Final evolution of Bulbasaur.",
+            PokemonId = 3
+        };
+
+        var sprite3 = await Sprite.GetSprite("https://pokeapi.co/api/v2/pokemon/3");
+        var pokemon3 = new Pokemon
+        {
+            Id = 3,
+            Name = "Venusaur",
+            Sprite = sprite3
+        };
+
+        modelBuilder.Entity<PokemonStats>().HasData(pokemonStats3);
+        modelBuilder.Entity<Pokemon>().HasData(pokemon3);
+
+        // Pokémon 4 - Charmander
+        var pokemonStats4 = new PokemonStats
+        {
+            Id = 4,
+            Experience = 120,
+            Height = 6,
+            Weight = 85,
+            Description = "A fire-type Pokémon.",
+            PokemonId = 4
+        };
+
+        var sprite4 = await Sprite.GetSprite("https://pokeapi.co/api/v2/pokemon/4");
+        var pokemon4 = new Pokemon
+        {
+            Id = 4,
+            Name = "Charmander",
+            Sprite = sprite4
+        };
+
+        modelBuilder.Entity<PokemonStats>().HasData(pokemonStats4);
+        modelBuilder.Entity<Pokemon>().HasData(pokemon4);
+
+        // Pokémon 5 - Charmeleon
+        var pokemonStats5 = new PokemonStats
+        {
+            Id = 5,
+            Experience = 140,
+            Height = 11,
+            Weight = 190,
+            Description = "Evolution of Charmander.",
+            PokemonId = 5
+        };
+
+        var sprite5 = await Sprite.GetSprite("https://pokeapi.co/api/v2/pokemon/5");
+        var pokemon5 = new Pokemon
+        {
+            Id = 5,
+            Name = "Charmeleon",
+            Sprite = sprite5
+        };
+
+        modelBuilder.Entity<PokemonStats>().HasData(pokemonStats5);
+        modelBuilder.Entity<Pokemon>().HasData(pokemon5);
+
+        // Pokémon 6 - Charizard
+        var pokemonStats6 = new PokemonStats
+        {
+            Id = 6,
+            Experience = 200,
+            Height = 17,
+            Weight = 905,
+            Description = "Final evolution of Charmander.",
+            PokemonId = 6
+        };
+
+        var sprite6 = await Sprite.GetSprite("https://pokeapi.co/api/v2/pokemon/6");
+        var pokemon6 = new Pokemon
+        {
+            Id = 6,
+            Name = "Charizard",
+            Sprite = sprite6
+        };
+
+        modelBuilder.Entity<PokemonStats>().HasData(pokemonStats6);
+        modelBuilder.Entity<Pokemon>().HasData(pokemon6);
     }
 }

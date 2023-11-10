@@ -1,22 +1,41 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
+}
+
+/*.scrollable {*/
+/*    height: 100%;*/
+/*    overflow-y: auto;*/
+/*}*/
+
+.scrollable {
+    overflow-y: auto;
+    max-height: calc(100vh - 100px); /* Adjust as needed, accounting for the header */
+}
+
+img {
+    image-rendering: pixelated;
+}
+
+dark_hover:hover {
+    border: 2px solid black;
+    transition: 0.3s;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }

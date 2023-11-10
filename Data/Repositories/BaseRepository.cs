@@ -11,7 +11,7 @@ public interface IBaseRepository<T>
 
 public class BaseRepository<T> : IBaseRepository<T> where T : class
 {
-    private readonly EfCoreContext _context;
+    protected readonly EfCoreContext _context;
 
     public BaseRepository(EfCoreContext context)
     {

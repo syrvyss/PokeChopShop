@@ -9,17 +9,21 @@ public class Order
 
     // Unencrypted plain-text personal information in strings,
     // taught by the very best (IT-Center Syd)
-    [StringLength(255)] [EmailAddress] public string Email { get; set; }
+    [StringLength(255)]
+    [EmailAddress]
+    [Required]
+    public string Email { get; set; }
 
-    [StringLength(16)] [CreditCard] public string CardDetails { get; set; }
+    [StringLength(16)] [Required] public string CardDetails { get; set; }
 
-    [StringLength(10)] public string SocialSecurity { get; set; }
-    public DateTime OrderDate { get; set; }
+    [Required] public double Price { get; set; }
 
-    public List<Pokemon> Pokemon { get; set; }
+    [StringLength(10)] [Required] public string SocialSecurity { get; set; }
+    [Required] public DateTime OrderDate { get; set; }
 
     // Navigation
-    public int PokemonId { get; set; }
+    public List<Pokemon> Pokemon { get; set; }
+
     public int CustomerInformationId { get; set; }
     public CustomerInformation CustomerInformation { get; set; }
 }

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Data.Migrations
 {
     [DbContext(typeof(EfCoreContext))]
-    [Migration("20231031102522_Initial")]
+    [Migration("20231108212327_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -88,6 +88,9 @@ namespace Data.Migrations
                     b.Property<int>("PokemonId")
                         .HasColumnType("integer");
 
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
                     b.Property<string>("SocialSecurity")
                         .IsRequired()
                         .HasMaxLength(10)
@@ -104,8 +107,9 @@ namespace Data.Migrations
                             CardDetails = "1234567891234567",
                             CustomerInformationId = 0,
                             Email = "a@gmail.com",
-                            OrderDate = new DateTime(2023, 10, 31, 10, 25, 21, 711, DateTimeKind.Utc).AddTicks(860),
+                            OrderDate = new DateTime(2023, 11, 8, 21, 23, 26, 88, DateTimeKind.Utc).AddTicks(8940),
                             PokemonId = 1,
+                            Price = 0.0,
                             SocialSecurity = "1234567891"
                         });
                 });
@@ -141,6 +145,36 @@ namespace Data.Migrations
                             Id = 1,
                             Name = "Bulbasaur",
                             Sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Ivysaur",
+                            Sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Venusaur",
+                            Sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Charmander",
+                            Sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Charmeleon",
+                            Sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Charizard",
+                            Sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"
                         });
                 });
 
@@ -184,6 +218,51 @@ namespace Data.Migrations
                             Height = 7,
                             PokemonId = 1,
                             Weight = 69
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Evolution of Bulbasaur.",
+                            Experience = 100,
+                            Height = 10,
+                            PokemonId = 2,
+                            Weight = 100
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Final evolution of Bulbasaur.",
+                            Experience = 103,
+                            Height = 13,
+                            PokemonId = 3,
+                            Weight = 130
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "A fire-type Pokémon.",
+                            Experience = 120,
+                            Height = 6,
+                            PokemonId = 4,
+                            Weight = 85
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Evolution of Charmander.",
+                            Experience = 140,
+                            Height = 11,
+                            PokemonId = 5,
+                            Weight = 190
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Final evolution of Charmander.",
+                            Experience = 200,
+                            Height = 17,
+                            PokemonId = 6,
+                            Weight = 905
                         });
                 });
 

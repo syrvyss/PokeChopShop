@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Data.Migrations
 {
     [DbContext(typeof(EfCoreContext))]
-    partial class EfCoreContextModelSnapshot : ModelSnapshot
+    [Migration("20231109123033_AddCustomOrderPokemon")]
+    partial class AddCustomOrderPokemon
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,7 +104,7 @@ namespace Data.Migrations
                             CardDetails = "1234567891234567",
                             CustomerInformationId = 0,
                             Email = "a@gmail.com",
-                            OrderDate = new DateTime(2023, 11, 9, 12, 40, 50, 903, DateTimeKind.Utc).AddTicks(9500),
+                            OrderDate = new DateTime(2023, 11, 9, 12, 30, 32, 365, DateTimeKind.Utc).AddTicks(2820),
                             Price = 0.0,
                             SocialSecurity = "1234567891"
                         });
@@ -119,9 +122,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Sprite")
                         .IsRequired()
                         .HasColumnType("text");
@@ -135,42 +135,36 @@ namespace Data.Migrations
                         {
                             Id = 1,
                             Name = "Bulbasaur",
-                            Quantity = 0,
                             Sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
                         },
                         new
                         {
                             Id = 2,
                             Name = "Ivysaur",
-                            Quantity = 0,
                             Sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png"
                         },
                         new
                         {
                             Id = 3,
                             Name = "Venusaur",
-                            Quantity = 0,
                             Sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"
                         },
                         new
                         {
                             Id = 4,
                             Name = "Charmander",
-                            Quantity = 0,
                             Sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"
                         },
                         new
                         {
                             Id = 5,
                             Name = "Charmeleon",
-                            Quantity = 0,
                             Sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png"
                         },
                         new
                         {
                             Id = 6,
                             Name = "Charizard",
-                            Quantity = 0,
                             Sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"
                         });
                 });

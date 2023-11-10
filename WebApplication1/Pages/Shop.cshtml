@@ -1,20 +1,60 @@
 @page
 @using Data.Repositories
+@using Data.Entities
 @model PokeChopShop.Pages.Shop
 @inject IPokemonRepository PokemonRepository
+@inject IPokemonStatsRepository PokemonStatsRepository
 
 @{
     ViewData["Title"] = "Shop";
 }
 
-<img src="public/look.svg" alt="" class="w-100 h-100 p-5 m-1 overflow-auto">
+<header class="px-5">
+    <img src="public/look.svg" alt="" class="w-100 h-100 p-5 m-1 overflow-auto">
+</header>
 
-<div class="container m-0 w-100">
-    @foreach (var item in PokemonRepository.GetAll())
+<section class="w-100 border-top border-bottom border-dark">
+    <div class="d-flex justify-content-between btn-group">
+        <div class="d-flex col-6 col-md-4">
+            <form method="get" class="d-flex">
+                <input name="searchQuery" class="form-control shadow-none h-100 fs-4 border-0 fw-bolder text-black-50 border-end border-dark rounded-0" type="text" placeholder="Search here" value="@Request.Query["searchQuery"]">
+            </form>
+        </div>
+        <div class="d-flex justify-content-between gap-5">
+            <p class="d-block my-auto">@Model.PokemonItems.Count products</p>
+            @{
+                var sortName = Model.SearchQuery;
+
+                if (sortName == string.Empty)
+                    sortName = "Id";
+
+                sortName = sortName.First().ToString().ToUpper() + sortName[1..];
+
+            }
+            <button type="button" class="btn rounded-0 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Sort by: @sortName
+            </button>
+            <ul class="dropdown-menu p-0 rounded-0">
+                <li>
+                    <a class="dropdown-item p-2 fst-italic" asp-page="Shop" asp-route-sort="id">Id</a>
+                </li>
+                <li>
+                    <a class="dropdown-item p-2 fst-italic" asp-page="Shop" asp-route-sort="name">Name</a>
+                </li>
+                <li>
+                    <a class="dropdown-item p-2 fst-italic" asp-page="Shop" asp-route-sort="weight">Weight</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<div class="d-flex flex-wrap gap-1 m-0 w-100">
+    @foreach (var item in Model.PokemonItems)
     {
-        <div class="card col-6 col-md-4 col-lg-3 text-bg-dark">
-            <img src="@item.Sprite" class="card-img" alt="...">
-            <div class="card-img-overlay d-flex flex-column justify-content-between">
+        <div class="card border-0 flex-grow-1 col-6 col-md-4 col-lg-3 text-bg-dark border-2 border-light">
+            <img src="@item.Sprite" class="card-img bg-light" alt="...">
+            <a asp-page="/itempage" asp-route-id=@item.Id class="card-img-overlay d-flex flex-column justify-content-between text-decoration-none text-black dark_hover border-2">
                 <div class="d-flex justify-content-between">
                     <small>
                         <p>Organic</p>
@@ -25,9 +65,9 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <h2 class="card-title fw-bolder">@item.Name</h2>
-                    <p class="card-text text-center">Weight:</p>
+                    <p class="card-text text-center fst-italic d-block my-auto text-decoration-underline fs-5" style="text-decoration-style: wavy;">@item.PokemonStats.Weight</p>
                 </div>
-            </div>
+            </a>
         </div>
     }
 </div>

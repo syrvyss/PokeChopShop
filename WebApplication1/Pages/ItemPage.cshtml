@@ -1,0 +1,86 @@
+@page "/shop/itempage/{id:int}"
+@using Data.Repositories
+
+@model PokeChopShop.Pages.ItemPage
+
+@inject IPokemonRepository PokemonRepository
+@inject IPokemonStatsRepository PokemonStatsRepository
+
+@{
+    ViewData["Title"] = "Item Page";
+}
+
+<section class="container-fluid vh-100">
+    <div class="row vh-100">
+        <div class="col-md-8">
+            <img class="w-100 bg-light rounded" src="@Model.Pokemon.Sprite" alt="">
+        </div>
+        <div class="col-md-4 d-flex flex-column gap-4">
+            <h2 class="fs-1 fw-bolder">@Model.Pokemon.Name</h2>
+
+            <form method="post" class="d-flex flex-column gap-2">
+                <span asp-validation-for="Weight"></span>
+
+                <label class="form-label fw-bolder">Weight:</label>
+                <div class="btn-group w-100">
+                    <input type="radio" asp-for="Weight" value="1" class="btn-check" id="weightOption1" autocomplete="off">
+                    <label class="btn btn-outline-dark rounded-0" for="weightOption1">1/3</label>
+
+                    <input type="radio" asp-for="Weight" value="2" class="btn-check" id="weightOption2" autocomplete="off">
+                    <label class="btn btn-outline-dark rounded-0" for="weightOption2">2/3</label>
+
+                    <input type="radio" asp-for="Weight" value="3" class="btn-check" id="weightOption3" autocomplete="off">
+                    <label class="btn btn-outline-dark rounded-0" for="weightOption3">3/3</label>
+                </div>
+
+                <input class="btn btn-dark rounded-0 w-100" type="submit" value="Add to basket!">
+
+                <label class="form-label">Price is based off weight, one ¥ per gram.</label>
+            </form>
+
+            <div class="accordion" id="accordionDetails">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Product Details
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionDetails">
+                        <div class="accordion-body d-flex flex-wrap gap-2">
+                            <p class="col-lg-5 flex-grow-1 d-flex flex-column">
+                                <strong>Experience</strong> @Model.Pokemon.PokemonStats.Experience
+                            </p>
+                            <p class="col-lg-5 flex-grow-1 d-flex flex-column">
+                                <strong>Height</strong> @Model.Pokemon.PokemonStats.Height
+                            </p>
+                            <p class="col-lg-5 flex-grow-1 d-flex flex-column">
+                                <strong>Weight</strong> @Model.Pokemon.PokemonStats.Weight
+                            </p>
+                            <p class="col-lg-5 flex-grow-1 d-flex flex-column">
+                                <strong>Description</strong> @Model.Pokemon.PokemonStats.Description
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Payment & Shipping
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionDetails">
+                        <div class="accordion-body d-flex flex-wrap gap-2">
+                            <p class="col-lg-5 flex-grow-1 d-flex flex-column">
+                                <strong>Payment</strong>We only accept crypto and other untraceable currencies.
+                            </p>
+                            <p type="tooltip" title="or however long it takes to arrive from china" class="col-lg-5 flex-grow-1 d-flex flex-column">
+                                <strong >Shipping</strong>Our shipping can take as little as 2 days!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

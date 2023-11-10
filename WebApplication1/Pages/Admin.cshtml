@@ -1,0 +1,119 @@
+@page "/admin"
+@using Data.Repositories
+@model PokeChopShop.Pages.Admin
+@inject IPokemonRepository PokemonRepository
+@inject IPokemonStatsRepository PokemonStatsRepository
+@inject IOrderRepository OrderRepository
+
+@{
+    ViewData["Title"] = "Order";
+    Layout = null;
+
+    var pokemon = PokemonRepository
+        .GetAll()
+        .OrderBy(x => x.Id)
+        .ToList();
+
+    pokemon
+        .ForEach(x => x.PokemonStats = PokemonStatsRepository.GetById(x.Id));
+
+    var orders = OrderRepository
+        .GetAll()
+        .ToList();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/PokeChopShop.styles.css" asp-append-version="true"/>
+</head>
+
+<body class="mb-0">
+<div class="container-fluid vh-100 border-bottom border-dark m-0 p-0 overflow-hidden">
+    <div class="row w-auto me-0 border-bottom border-dark d-flex justify-content-end position-sticky">
+        <a asp-page="Index" class="btn-close p-4"></a>
+    </div>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="scrollable w-75 mx-auto my-5">
+                    <h4 class="fw-bolder" id="pokemonTitle">Pokemon</h4>
+
+                    <div class="d-flex flex-column border-dark border-bottom">
+                        @foreach (var item in pokemon)
+                        {
+                            <div class="d-flex justify-content-between border-top border-dark border-start border-end">
+                                <a asp-page="ItemAdmin" asp-route-id="@item.Id" class="w-100 text-decoration-none d-flex justify-content-between">
+                                    <li class="list-group-item border-0 d-block my-auto">@item.Name</li>
+                                </a>
+                                <form method="post" asp-page-handler="DeletePokemon">
+                                    <button type="submit" class="btn-close mx-auto p-3"></button>
+                                    <input type="hidden" name="Id" value="@item.Id"/>
+                                </form>
+                            </div>
+                        }
+                        <a asp-page="ItemAdminCreate" class="border-top border-dark border-start border-end text-decoration-none d-flex justify-content-between">
+                            <li class="list-group-item bg-light mx-auto border-0 bg-white text-black-50">+</li>
+                        </a>
+                    </div>
+
+                    <h4 class="fw-bolder mt-5" id="pokemonTitle">Orders</h4>
+
+                    <div class="d-flex flex-column border-dark border-bottom">
+                        @foreach (var item in orders)
+                        {
+                            <div class="d-flex justify-content-between border-top border-dark border-start border-end">
+                                <a asp-page="OrderAdmin" asp-route-id="@item.Id" class="w-100 text-decoration-none d-flex justify-content-between">
+                                    <li class="list-group-item border-0 d-block my-auto">@item.Email</li>
+                                </a>
+                                <form method="post" asp-page-handler="DeleteOrder">
+                                    <button type="submit" class="btn-close mx-auto p-3"></button>
+                                    <input type="hidden" name="Id" value="@item.Id"/>
+                                </form>
+                            </div>
+                        }
+                        <a asp-page="Shop" class="border-top border-dark border-start border-end text-decoration-none d-flex justify-content-between">
+                            <li class="list-group-item bg-light mx-auto border-0 bg-white text-black-50">+</li>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-column col-md-4 p-0 border-start border-dark vh-100">
+                <div class="border-bottom border-dark p-3">
+                    <p class="my-auto fs-4 fw-bolder">Overview</p>
+                </div>
+
+                <div class="scrollable">
+                    <div>
+                        <div class="p-3">
+                            <p class="fw-bold">Pokemon</p>
+                            <div class="px-4">
+                                @foreach (var item in pokemon)
+                                {
+                                    <p>@item.Name</p>
+                                }
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <p class="fw-bold">Orders</p>
+                            <div class="px-4">
+                                @foreach (var item in orders)
+                                {
+                                    <p>@item.Email</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

@@ -1,12 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Data.Entities;
 
 public class PokemonStats
 {
     public int Id { get; set; }
 
-    public int Experience { get; set; }
-    public int Height { get; set; }
-    public int Weight { get; set; }
+    [Required] public int Experience { get; set; }
+    [Required] public int Height { get; set; }
+    [Required] public int Weight { get; set; }
     public string Description { get; set; }
 
     // Navigation

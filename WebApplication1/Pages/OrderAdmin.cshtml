@@ -1,0 +1,140 @@
+@page "/admin/shop/order/"
+@using Data.Repositories
+@model WebApplication1.Pages.OrderAdmin
+@inject IOrderRepository OrderRepository
+@inject ICustomerInformation CustomerInformation
+
+@{
+    ViewData["Title"] = "OrderAdmin";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/PokeChopShop.styles.css" asp-append-version="true"/>
+</head>
+
+<body class="m-0">
+<div class="container-fluid border-bottom border-dark m-0 p-0 overflow-hidden">
+    <div class="row w-auto me-0 border-bottom border-dark d-flex justify-content-end">
+        <a asp-page="Admin" class="btn-close p-4"></a>
+    </div>
+
+    <div class="row">
+        <div class="col-8 my-5">
+            <form method="post">
+                <div class="w-75 gap-3 mx-auto d-flex flex-column">
+                    <div>
+                        <label for="inputCountry" class="form-label fs-4 fw-bolder">Country</label>
+                        <p>
+                            <span asp-validation-for="Country" class="fs-6 text-danger"></span>
+                        </p>
+                        <input placeholder="Country" asp-for="Country" type="text" class="form-control rounded-0 p-2 border-dark" id="inputCountry" aria-describedby="countryHelp" value="@Model.Order.CustomerInformation.Country">
+                        <div id="countryHelp" class="form-text">We would never misuse your personal information.</div>
+                    </div>
+
+                    <div>
+                        <label for="inputAddress" class="form-label fs-4 fw-bolder">Address</label>
+                        <p>
+                            <span asp-validation-for="Address" class="fs-6 text-danger"></span>
+                        </p>
+                        <input placeholder="Address" asp-for="Address" type="text" class="form-control rounded-0 p-2 border-dark" id="inputAddress" aria-describedby="addressHelp" value="@Model.Order.CustomerInformation.Address">
+                        <div id="addressHelp" class="form-text">We won't threaten you to release your address.</div>
+                    </div>
+
+                    <div>
+                        <label for="inputEmail" class="form-label fs-4 fw-bolder">E-Mail Address</label>
+                        <p>
+                            <span asp-validation-for="Email" class="fs-6 text-danger"></span>
+                        </p>
+                        <input placeholder="E-Mail" asp-for="Email" type="email" class="form-control rounded-0 p-2 border-dark" id="inputEmail" aria-describedby="emailHelp" value="@Model.Order.Email">
+                        <div id="emailHelp" class="form-text">We'll try not to share your email with anyone else.</div>
+                    </div>
+
+                    <div>
+                        <label for="inputCard" class="form-label fs-4 fw-bolder">Card Information</label>
+                        <p>
+                            <span asp-validation-for="CardNumber" class="fs-6 text-danger"></span>
+                        </p>
+                        <input placeholder="Card Information" asp-for="CardNumber" type="text" class="form-control rounded-0 p-2 border-dark" id="inputCard" aria-describedby="cardHelp" value="@Model.Order.CardDetails">
+                        <div id="cardHelp" class="form-text">Your card details are treated with the best that modern web-security offers.</div>
+                    </div>
+
+                    <div>
+                        <label for="inputSocial" class="form-label fs-4 fw-bolder">Social-Security</label>
+                        <p>
+                            <span asp-validation-for="SocialSecurity" class="fs-6 text-danger"></span>
+                        </p>
+                        <input placeholder="Social Security" asp-for="SocialSecurity" type="text" class="form-control rounded-0 p-2 border-dark" id="inputSocial" aria-describedby="socialHelp" value="@Model.Order.SocialSecurity">
+                        <div id="socialHelp" class="form-text">We are unhackable, your social-security is safe with us.</div>
+                    </div>
+
+                    <div class="mt-auto">
+                        <input class="btn btn-dark rounded-0 w-100" type="submit" value="Submit!">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="d-flex flex-column col-4 p-0 border-start border-dark scrollable">
+            <div class="border-bottom border-dark p-3">
+                <p class="my-auto fs-4 fw-bolder">Your basket</p>
+            </div>
+
+            <div>
+                @if (@Model.Order.Pokemon.Count == 0)
+                {
+                    <p class="w-100 text-center my-3">...</p>
+                }
+
+                @foreach (var item in @Model.Order.Pokemon)
+                {
+                    @for (var i = 0; i <= item.Quantity; i++)
+                    {
+                        <div class="container-md p-0">
+                            <div class="row m-0">
+                                <div class="col-md-4 p-0 ps-0 card text-bg-dark border-0 rounded-0">
+                                    <img alt="..." src="@item.Sprite" class="bg-light p-0 border-0"/>
+                                    <div class="card-img-overlay">
+                                        <form method="post" asp-page-handler="Delete">
+                                            <input type="hidden" name="Id" value="@item.Id"/>
+                                            <button type="submit" class="btn-close bg-white opacity-100 rounded-0 mx-auto p-1"></button>
+                                        </form>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8 d-flex">
+                                    <div class="py-md-3 my-auto">
+                                        <p class="fs-5 fw-bolder text-center text-md-start">@item.Name</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="p-3 border-top border-dark">
+                @{
+                    var summedPrice = Model.BasketItems.Sum(x => x.Price);
+
+                    var shipping = summedPrice * 0.125;
+                    var taxes = summedPrice * 0.25;
+                    var total = shipping + taxes + summedPrice;
+                }
+                <p class="fw-bold">Subtotal <span class="fw-normal">@summedPrice.ToString("F1")</span></p>
+                <p class="fw-bold">Shipping <span class="fw-normal">@shipping.ToString("F1")</span></p>
+                <p class="fw-bold">Taxes <span class="fw-normal">@taxes.ToString("F1")</span></p>
+                <p class="fw-bold">Total <span class="fw-normal">@total.ToString("F1")</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

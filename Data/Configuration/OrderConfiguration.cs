@@ -23,8 +23,8 @@ public partial class EfCoreContext
                 .HasForeignKey<CustomerInformation>(x => x.OrderId)
                 .IsRequired();
 
-            builder
-                .HasMany<Pokemon>(x => x.Pokemon);
+            builder.HasMany(x => x.Pokemon)
+                .WithMany(x => x.Orders);
         }
     }
 }

@@ -1,12 +1,8 @@
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Data.Entities;
-using Data.Repositories;
+using Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Newtonsoft.Json;
-using WebApplication1.Entities;
 
 namespace WebApplication1.Pages;
 
@@ -15,11 +11,9 @@ public class OrderAdmin : PageModel
     private readonly IOrderRepository _orderRepository;
     private readonly IPokemonRepository _pokemonRepository;
 
-    public List<BasketItem> BasketItems { get; private set; } = new();
-
     public Data.Entities.Order Order { get; set; }
 
-    [BindProperty(SupportsGet = true)] public int Id { get; set; }
+    [BindProperty(SupportsGet = true)] public int OrderId { get; set; }
 
     [BindProperty]
     [Required]

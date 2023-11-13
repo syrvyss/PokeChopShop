@@ -1,10 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 using Data.Entities;
-using Data.Repositories;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Newtonsoft.Json;
 
 namespace PokeChopShop.Pages;
 

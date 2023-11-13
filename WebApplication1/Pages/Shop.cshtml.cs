@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Data.Entities;
+using Data.Interfaces;
 using Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

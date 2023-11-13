@@ -1,4 +1,4 @@
-using Data.Repositories;
+using Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

@@ -1,9 +1,5 @@
-@page
-@using Data.Repositories
-@using Data.Entities
+@page "/shop/{pageId:int?}"
 @model PokeChopShop.Pages.Shop
-@inject IPokemonRepository PokemonRepository
-@inject IPokemonStatsRepository PokemonStatsRepository
 
 @{
     ViewData["Title"] = "Shop";

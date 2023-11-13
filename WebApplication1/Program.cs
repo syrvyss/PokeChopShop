@@ -1,5 +1,6 @@
 using Data.Configuration;
 using Data.Entities;
+using Data.Interfaces;
 using Data.Repositories;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.AspNetCore.CookiePolicy;

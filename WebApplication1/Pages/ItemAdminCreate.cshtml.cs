@@ -1,5 +1,5 @@
 using Data.Entities;
-using Data.Interfaces;
+using Data.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

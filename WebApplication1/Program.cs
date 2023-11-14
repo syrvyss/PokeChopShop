@@ -1,10 +1,7 @@
-using Data.Configuration;
-using Data.Entities;
-using Data.Interfaces;
-using Data.Repositories;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using Data.Services.Interfaces;
+using Data.Services.Repositories;
 using Microsoft.AspNetCore.CookiePolicy;
-using Microsoft.EntityFrameworkCore;
+using CustomerInformation = Data.Services.Repositories.CustomerInformation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +11,7 @@ builder.Services.AddDbContext<Data.EfCoreContext>();
 
 builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
 builder.Services.AddScoped<IPokemonStatsRepository, PokemonStatsRepository>();
-builder.Services.AddScoped<ICustomerInformation, Data.Repositories.CustomerInformation>();
+builder.Services.AddScoped<ICustomerInformation, CustomerInformation>();
 
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 

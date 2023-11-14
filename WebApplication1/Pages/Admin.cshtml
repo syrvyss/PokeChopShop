@@ -30,12 +30,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/PokeChopShop.styles.css" asp-append-version="true"/>
+    <title>Admin Page</title>
 </head>
 
 <body class="mb-0">
 <div class="container-fluid vh-100 border-bottom border-dark m-0 p-0 overflow-hidden">
     <div class="row w-auto me-0 border-bottom border-dark d-flex justify-content-end position-sticky">
-        <a asp-page="Index" class="btn-close p-4"></a>
+        <a asp-page="Index" class="btn-close p-4" aria-label="CloseWindow"></a>
     </div>
     <form method="post">
         <div class="row">
@@ -48,10 +49,12 @@
                         {
                             <div class="d-flex justify-content-between border-top border-dark border-start border-end">
                                 <a asp-page="ItemAdmin" asp-route-id="@item.Id" class="w-100 text-decoration-none d-flex justify-content-between">
-                                    <li class="list-group-item border-0 d-block my-auto">@item.Name</li>
+                                    <ul class="list-group">
+                                        <li class="list-group-item border-0 d-block my-auto">@item.Name</li>
+                                    </ul>
                                 </a>
                                 <form method="post" asp-page-handler="DeletePokemon">
-                                    <button type="submit" class="btn-close mx-auto p-3"></button>
+                                    <button type="submit" aria-label="CloseButton" class="btn-close mx-auto p-3"></button>
                                     <input type="hidden" name="Id" value="@item.Id"/>
                                 </form>
                             </div>
@@ -68,16 +71,20 @@
                         {
                             <div class="d-flex justify-content-between border-top border-dark border-start border-end">
                                 <a asp-page="OrderAdmin" asp-route-id="@item.Id" class="w-100 text-decoration-none d-flex justify-content-between">
-                                    <li class="list-group-item border-0 d-block my-auto">@item.Email</li>
+                                    <ul class="list-group">
+                                        <li class="list-group-item border-0 d-block my-auto">@item.Email</li>
+                                    </ul>
                                 </a>
                                 <form method="post" asp-page-handler="DeleteOrder">
-                                    <button type="submit" class="btn-close mx-auto p-3"></button>
+                                    <button type="submit" aria-label="CloseButton" class="btn-close mx-auto p-3"></button>
                                     <input type="hidden" name="Id" value="@item.Id"/>
                                 </form>
                             </div>
                         }
                         <a asp-page="Shop" class="border-top border-dark border-start border-end text-decoration-none d-flex justify-content-between">
-                            <li class="list-group-item bg-light mx-auto border-0 bg-white text-black-50">+</li>
+                            <ul class="list-group">
+                                <li class="list-group-item bg-light mx-auto border-0 bg-white text-black-50">+</li>
+                            </ul>
                         </a>
                     </div>
                 </div>

@@ -56,7 +56,7 @@ public class OrderAdmin : PageModel
     public void OnGet(int id)
     {
         ViewData["ItemId"] = id;
-        Id = id;
+        OrderId = id;
 
         Order = _orderRepository.GetFullById(id);
     }
@@ -64,18 +64,17 @@ public class OrderAdmin : PageModel
     public IActionResult OnPostDelete(int id)
     {
         var pokemon = _pokemonRepository.GetFullById(id);
-        var order = _orderRepository.GetFullById(Id);
+        var order = _orderRepository.GetFullById(OrderId);
 
         if (pokemon.Quantity > 1)
         {
             pokemon.Quantity -= 1;
             order.Pokemon.FirstOrDefault(x => x.Id == id).Quantity = pokemon.Quantity;
             _orderRepository.Update(order);
-            // _pokemonRepository.Update(pokemon);
         }
         else
         {
-            order?.Pokemon.Remove(pokemon);
+            order.Pokemon = new List<Pokemon>();
             _orderRepository.Update(order);
         }
 
@@ -86,7 +85,7 @@ public class OrderAdmin : PageModel
     {
         if (!ModelState.IsValid) return Page();
 
-        Order = _orderRepository.GetFullById(Id);
+        Order = _orderRepository.GetFullById(OrderId);
 
         Order.Email = Email;
         Order.CardDetails = CardNumber;

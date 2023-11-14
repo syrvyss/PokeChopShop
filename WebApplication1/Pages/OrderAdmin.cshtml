@@ -91,19 +91,12 @@
 
                 @foreach (var item in @Model.Order.Pokemon)
                 {
-                    @for (var i = 0; i <= item.Quantity; i++)
+                    @for (var i = 0; i < item.Quantity; i++)
                     {
                         <div class="container-md p-0">
                             <div class="row m-0">
                                 <div class="col-md-4 p-0 ps-0 card text-bg-dark border-0 rounded-0">
                                     <img alt="..." src="@item.Sprite" class="bg-light p-0 border-0"/>
-                                    <div class="card-img-overlay">
-                                        <form method="post" asp-page-handler="Delete">
-                                            <input type="hidden" name="Id" value="@item.Id"/>
-                                            <button type="submit" class="btn-close bg-white opacity-100 rounded-0 mx-auto p-1"></button>
-                                        </form>
-
-                                    </div>
                                 </div>
 
                                 <div class="col-md-8 d-flex">
@@ -119,7 +112,7 @@
 
             <div class="p-3 border-top border-dark">
                 @{
-                    var summedPrice = Model.BasketItems.Sum(x => x.Price);
+                    var summedPrice = Model.Order.Price;
 
                     var shipping = summedPrice * 0.125;
                     var taxes = summedPrice * 0.25;

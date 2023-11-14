@@ -1,8 +1,8 @@
 using Data.Entities;
-using Data.Interfaces;
+using Data.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data.Repositories;
+namespace Data.Services.Repositories;
 
 public class PokemonRepository : BaseRepository<Pokemon>, IPokemonRepository
 {

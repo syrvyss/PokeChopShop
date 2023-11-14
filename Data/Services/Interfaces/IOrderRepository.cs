@@ -1,6 +1,6 @@
 using Data.Entities;
 
-namespace Data.Interfaces;
+namespace Data.Services.Interfaces;
 
 public interface IOrderRepository : IBaseRepository<Order>
 {

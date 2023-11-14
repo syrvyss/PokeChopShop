@@ -1,7 +1,6 @@
-using Data.Entities;
-using Data.Interfaces;
+using Data.Services.Interfaces;
 
-namespace Data.Repositories;
+namespace Data.Services.Repositories;
 
 public class CustomerInformation : BaseRepository<Entities.CustomerInformation>, ICustomerInformation
 {

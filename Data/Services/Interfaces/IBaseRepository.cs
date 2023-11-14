@@ -1,4 +1,4 @@
-namespace Data.Interfaces;
+namespace Data.Services.Interfaces;
 
 public interface IBaseRepository<T>
 {

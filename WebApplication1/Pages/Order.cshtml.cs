@@ -1,10 +1,8 @@
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Data.Entities;
-using Data.Repositories;
+using Data.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using WebApplication1.Entities;
 
@@ -104,7 +102,7 @@ public class Order : PageModel
     {
         if (!ModelState.IsValid) return Page();
 
-        Data.Entities.CustomerInformation customerInformation = new()
+        CustomerInformation customerInformation = new()
         {
             Country = Country,
             Address = Address

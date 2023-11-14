@@ -1,7 +1,8 @@
 using Data.Entities;
+using Data.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data.Repositories;
+namespace Data.Services.Repositories;
 
 public class OrderRepository : BaseRepository<Order>, IOrderRepository
 {

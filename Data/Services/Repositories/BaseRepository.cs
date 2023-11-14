@@ -1,13 +1,6 @@
-namespace Data.Repositories;
+using Data.Services.Interfaces;
 
-public interface IBaseRepository<T>
-{
-    T GetById(int id);
-    IEnumerable<T> GetAll();
-    void Add(T entity);
-    void Update(T entity);
-    void Delete(T entity);
-}
+namespace Data.Services.Repositories;
 
 public class BaseRepository<T> : IBaseRepository<T> where T : class
 {

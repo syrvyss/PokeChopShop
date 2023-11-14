@@ -1,7 +1,6 @@
 using Data.Services.Interfaces;
 using Data.Services.Repositories;
 using Microsoft.AspNetCore.CookiePolicy;
-using CustomerInformation = Data.Services.Repositories.CustomerInformation;
 
 var builder = WebApplication.CreateBuilder(args);
 

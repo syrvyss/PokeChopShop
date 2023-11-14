@@ -11,68 +11,33 @@ public class Shop : PageModel
     private readonly IPokemonRepository _pokemonRepository;
 
     public string SearchQuery { get; set; } = string.Empty;
-    public List<Pokemon> PokemonItems { get; private set; }
+    public string FilterQuery { get; set; } = string.Empty;
+    public int PageId { get; private set; }
+    public int PokemonCount { get; private set; } = 0;
+
+    public List<Pokemon> PokemonOnPage { get; private set; }
 
     public Shop(IPokemonRepository pokemonRepository)
     {
         _pokemonRepository = pokemonRepository;
     }
 
-    public void OnGet(string searchQuery)
+    public void OnGet(string searchQuery, int? pageId)
     {
+        PageId = pageId ?? 1;
+
         var requestQuery = Request.Query["sort"];
+
         if (!string.IsNullOrEmpty(requestQuery))
-            SearchQuery = requestQuery;
-        // var requestQuery = Request.Query["sort"];
-        //
-        // if (!string.IsNullOrEmpty(requestQuery))
-        //     SearchQuery = requestQuery;
-        //
-        // var allPokemon = _pokemonRepository
-        //     .GetAll()
-        //     .ToList();
-        //
-        // allPokemon.ForEach(x =>
-        // {
-        //     var fullPokemon = _pokemonRepository.GetFullById(x.Id);
-        //     x.PokemonStats = fullPokemon != null ? fullPokemon.PokemonStats : new PokemonStats();
-        // });
-        //
-        // allPokemon = SearchQuery switch
-        // {
-        //     "name" => allPokemon.OrderBy(x => x.Name).ToList(),
-        //     "weight" => allPokemon.OrderBy(x => x.PokemonStats.Weight).ToList(),
-        //     _ => allPokemon.OrderBy(x => x.Id).ToList()
-        // };
-        //
-        // if (!string.IsNullOrEmpty(SearchQuery))
-        //     allPokemon = allPokemon
-        //         .Where(p => p.Name.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase))
-        //         .ToList();
-        //
-        // PokemonItems = allPokemon;
-        //
-        var allPokemon = _pokemonRepository.GetAll().ToList();
+            FilterQuery = requestQuery;
 
-        allPokemon.ForEach(x =>
-        {
-            var fullPokemon = _pokemonRepository.GetFullById(x.Id);
-            x.PokemonStats = fullPokemon != null ? fullPokemon.PokemonStats : new PokemonStats();
-        });
+        SearchQuery = searchQuery;
 
-        if (!string.IsNullOrEmpty(searchQuery))
-            allPokemon = allPokemon
-                .Where(p => p.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
-                .ToList();
+        PokemonOnPage = _pokemonRepository
+            .GetItemsOnPage(PageId, 10, FilterQuery, SearchQuery)
+            .ToList();
 
-        allPokemon = SearchQuery switch
-        {
-            "name" => allPokemon.OrderBy(x => x.Name).ToList(),
-            "weight" => allPokemon.OrderBy(x => x.PokemonStats.Weight).ToList(),
-            _ => allPokemon.OrderBy(x => x.Id).ToList()
-        };
-
-        PokemonItems = allPokemon;
+        PokemonCount = _pokemonRepository.GetAll().Count();
     }
 
     public IActionResult OnPost()

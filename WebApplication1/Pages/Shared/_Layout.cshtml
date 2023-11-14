@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/PokeChopShop.styles.css" asp-append-version="true"/>
+    <meta name="slaughter website for pokemon">
 </head>
 <body>
 <header class="sticky-md-top">
-    <div class="w-100 bg-warning px-0 py-1">
+    <div class="w-100 bg-success px-0 py-1">
         <a href="/shop" class="link-dark text-reset text-decoration-none h-100">
             <p class="text-center text-white fw-bold my-auto">🔥 Big ongoing sale! Up to 20% off! 🔥</p>
         </a>
@@ -24,26 +25,28 @@
                 </a>
 
                 <div class="collapse navbar-collapse text-md-center d-md-flex justify-content-sm-end text-sm-center" id="navbarToggler">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link fw-bold text-black">
-                            About
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/shop" class="nav-link fw-bold text-black">
-                            Shop
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/shop/order" class="nav-link fw-bold text-black">
-                            Basket
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/admin" class="nav-link fw-bold text-black">
-                            Admin <span class="small fst-italic">(please don't click if you are not an admin)</span>
-                        </a>
-                    </li>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link fw-bold text-black">
+                                About
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/shop" class="nav-link fw-bold text-black">
+                                Shop
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/shop/order" class="nav-link fw-bold text-black">
+                                Basket
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin" class="nav-link fw-bold text-black">
+                                Admin <span class="small fst-italic">(please don't click if you are not an admin)</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                     Menu

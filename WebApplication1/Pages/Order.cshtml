@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/PokeChopShop.styles.css" asp-append-version="true"/>
+    <title>Order</title>
 </head>
 
 <body class="m-0">
@@ -102,7 +103,7 @@
                                 <div class="card-img-overlay">
                                     <form method="post" asp-page-handler="Delete">
                                         <input type="hidden" name="Id" value="@item.Id"/>
-                                        <button type="submit" class="btn-close bg-white opacity-100 rounded-0 mx-auto p-1"></button>
+                                        <button type="submit" aria-label="deleteOrder" class="btn-close bg-white opacity-100 rounded-0 mx-auto p-1"></button>
                                     </form>
                                 </div>
                             </div>

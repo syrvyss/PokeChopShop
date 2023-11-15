@@ -67,3 +67,31 @@
         </div>
     }
 </div>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @{
+            var canForwardBack = (Model.PageId > 1, (double)Model.PageId >= (double)Model.PokemonCount / 10.0);
+            var forwardLink = Model.PageId + 1;
+            var backLink = Model.PageId - 1;
+        }
+        <li class="page-item @(canForwardBack.Item1 ? "" : "disabled")">
+            <a asp-page="Shop" asp-route-pageId="@backLink" asp-route-searchQuery="@Model.SearchQuery" asp-route-sort="@Request.Query["sort"]" class="page-link">Previous</a>
+        </li>
+        <li class="page-item">
+            <a asp-page="Shop" asp-route-pageId="1" class="page-link" asp-page="Shop" asp-route-pageId="1" asp-route-searchQuery="@Model.SearchQuery" asp-route-sort="@Request.Query["sort"]">1</a>
+        </li>
+        @for (var i = 0; i < Model.PokemonCount / 10; i++)
+        {
+            <li class="page-item">
+                @{
+                    var pageLink = i + 2;
+                }
+                <a class="page-link" asp-page="Shop" asp-route-pageId="@pageLink" asp-route-searchQuery="@Model.SearchQuery" asp-route-sort="@Request.Query["sort"]">@pageLink</a>
+            </li>
+        }
+        <li class="page-item @(canForwardBack.Item2 ? "disabled" : "")">
+            <a asp-page="Shop" asp-route-pageId="@forwardLink" asp-route-searchQuery="@Model.SearchQuery" asp-route-sort="@Request.Query["sort"]" class="page-link">Next</a>
+        </li>
+    </ul>
+</nav>

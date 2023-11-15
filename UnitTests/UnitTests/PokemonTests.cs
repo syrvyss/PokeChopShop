@@ -1,5 +1,5 @@
 using Data.Entities;
-using Data.Repositories;
+using Data.Services.Repositories;
 using Data.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -9,17 +9,24 @@ namespace UnitTests;
 
 public class Pokemon_Tests
 {
-    [Fact]
-    public async void Should_CreatePokemonSuccessfully()
+    private readonly PokemonRepository _repository;
+
+    public Pokemon_Tests()
     {
-        // Arrange
         var options = new DbContextOptionsBuilder<Data.EfCoreContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
 
-        using var context = new Data.EfCoreContext(options);
-        var repository = new PokemonRepository(context);
+        var context = new Data.EfCoreContext(options);
 
+        // Inject the concrete implementation of the repository
+        _repository = new PokemonRepository(context);
+    }
+
+    [Fact]
+    public async void Should_CreatePokemonSuccessfully()
+    {
+        // Arrange
         var pokemon1 = new Pokemon
         {
             Id = 1,
@@ -28,23 +35,16 @@ public class Pokemon_Tests
         };
 
         // Act
-        repository.Add(pokemon1);
+        _repository.Add(pokemon1);
 
         // Assert
-        Assert.Equal(1, context.Set<Pokemon>().Count());
+        Assert.Equal(1, _repository.GetAll().Count());
     }
 
     [Fact]
     public async void Should_GetAllOrdersSuccessfully()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<Data.EfCoreContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString())
-            .Options;
-
-        using var context = new Data.EfCoreContext(options);
-        var repository = new PokemonRepository(context);
-
         var pokemon1 = new Pokemon
         {
             Id = 1,
@@ -59,27 +59,18 @@ public class Pokemon_Tests
             Sprite = await Sprite.GetSprite("https://pokeapi.co/api/v2/pokemon/2")
         };
 
-        repository.Add(pokemon1);
-        repository.Add(pokemon2);
-
         // Act
-        var allPokemon = repository.GetAll();
+        _repository.Add(pokemon1);
+        _repository.Add(pokemon2);
 
         // Assert
-        Assert.Equal(2, allPokemon.Count());
+        Assert.Equal(2, _repository.GetAll().Count());
     }
 
     [Fact]
     public async void Should_UpdateOrderSuccessfully()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<Data.EfCoreContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString())
-            .Options;
-
-        using var context = new Data.EfCoreContext(options);
-        var repository = new PokemonRepository(context);
-
         var pokemon1 = new Pokemon
         {
             Id = 1,
@@ -87,13 +78,13 @@ public class Pokemon_Tests
             Sprite = await Sprite.GetSprite("https://pokeapi.co/api/v2/pokemon/1")
         };
 
-        repository.Add(pokemon1);
+        _repository.Add(pokemon1);
 
         // Act
         pokemon1.Name = "Peter";
-        repository.Update(pokemon1);
+        _repository.Update(pokemon1);
 
-        var updatedPokemon = repository.GetById(pokemon1.Id);
+        var updatedPokemon = _repository.GetById(pokemon1.Id);
 
         // Assert
         Assert.Equal("Peter", updatedPokemon.Name);
@@ -103,13 +94,6 @@ public class Pokemon_Tests
     public async void Should_DeleteOrderSuccessfully()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<Data.EfCoreContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString())
-            .Options;
-
-        using var context = new Data.EfCoreContext(options);
-        var repository = new PokemonRepository(context);
-
         var pokemon1 = new Pokemon
         {
             Id = 1,
@@ -118,11 +102,11 @@ public class Pokemon_Tests
         };
 
         // Act
-        repository.Add(pokemon1);
+        _repository.Add(pokemon1);
 
-        repository.Delete(pokemon1);
+        _repository.Delete(pokemon1);
 
         // Assert
-        Assert.Equal(0, context.Set<Pokemon>().Count());
+        Assert.Empty(_repository.GetAll());
     }
 }

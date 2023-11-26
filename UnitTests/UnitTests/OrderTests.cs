@@ -2,7 +2,7 @@ using Data.Entities;
 using Data.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace UnitTests;
+namespace UnitTests.UnitTests;
 
 public class Order_Tests
 {
@@ -29,7 +29,7 @@ public class Order_Tests
             Email = "a@gmail.com",
             CardDetails = "0000000000000000",
             SocialSecurity = "0000000000",
-            CustomerInformation = new Data.Entities.CustomerInformation()
+            CustomerInformation = new CustomerInformation()
             {
                 Country = "dammag",
                 Address = "dammg koldin"
@@ -55,7 +55,7 @@ public class Order_Tests
             Email = "a@gmail.com",
             CardDetails = "0000000000000000",
             SocialSecurity = "0000000000",
-            CustomerInformation = new Data.Entities.CustomerInformation()
+            CustomerInformation = new CustomerInformation()
             {
                 Country = "dammag",
                 Address = "dammg koldin"
@@ -69,7 +69,7 @@ public class Order_Tests
             Email = "a@gmail.com",
             CardDetails = "0000000000000000",
             SocialSecurity = "0000000000",
-            CustomerInformation = new Data.Entities.CustomerInformation()
+            CustomerInformation = new CustomerInformation()
             {
                 Country = "dammag",
                 Address = "dammg koldin"
@@ -97,7 +97,7 @@ public class Order_Tests
             Email = "a@gmail.com",
             CardDetails = "0000000000000000",
             SocialSecurity = "0000000000",
-            CustomerInformation = new Data.Entities.CustomerInformation()
+            CustomerInformation = new CustomerInformation()
             {
                 Country = "dammag",
                 Address = "dammg koldin"
@@ -128,7 +128,7 @@ public class Order_Tests
             Email = "a@gmail.com",
             CardDetails = "0000000000000000",
             SocialSecurity = "0000000000",
-            CustomerInformation = new Data.Entities.CustomerInformation()
+            CustomerInformation = new CustomerInformation()
             {
                 Country = "dammag",
                 Address = "dammg koldin"
@@ -141,7 +141,7 @@ public class Order_Tests
         // Act
         _repository.Add(order1);
 
-        _repository.Delete(order1);
+        _repository.Delete(order1.Id);
 
         // Assert
         Assert.Empty(_repository.GetAll());

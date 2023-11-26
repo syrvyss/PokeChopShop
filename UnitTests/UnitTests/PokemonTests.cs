@@ -2,10 +2,8 @@ using Data.Entities;
 using Data.Services.Repositories;
 using Data.Utility;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Npgsql.PostgresTypes;
 
-namespace UnitTests;
+namespace UnitTests.UnitTests;
 
 public class Pokemon_Tests
 {
@@ -104,7 +102,7 @@ public class Pokemon_Tests
         // Act
         _repository.Add(pokemon1);
 
-        _repository.Delete(pokemon1);
+        _repository.Delete(pokemon1.Id);
 
         // Assert
         Assert.Empty(_repository.GetAll());

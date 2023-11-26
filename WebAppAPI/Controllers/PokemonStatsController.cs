@@ -6,7 +6,7 @@ namespace WebAppAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class OrderController(Logic.Controllers.IOrderController controller)
-    : BaseController<FlatOrderDto>(controller), IOrderController
+public class PokemonStatsController(Logic.Controllers.IPokemonStatsController controller)
+    : BaseController<PokemonStatsDto>(controller)
 {
 }

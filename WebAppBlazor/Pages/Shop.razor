@@ -1,12 +1,89 @@
-﻿@page "/shop"
+@page "/shop/"
+@page "/shop/{PageId:int}"
 
-@using Data.Entities
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+
+@using PokeShop.Shared.Dto;
+@using WebAppBlazor.Entities
+@using WebAppBlazor.Services
 
 @code {
-    private List<Pokemon> pokemon;
+    [Parameter] public int? PageId { get; set; }
+
+    List<PokemonViewModel> _pokemonViewModel = new();
+    List<PokemonViewModel> _filteredPokemonViewModel = new();
+
+    bool IsFailed { get; set; } = false;
+
+    string _currentSearchQuery = "";
 
     protected override async Task OnInitializedAsync()
     {
+        PageId ??= 1;
+
+        var httpHelper = new HttpHelper(HttpClient);
+
+        try
+        {
+            await GetPokemon(httpHelper);
+        }
+        catch (HttpRequestException e)
+        {
+            IsFailed = true;
+            throw;
+        }
+    }
+
+    async Task GetPokemon(HttpHelper httpHelper)
+    {
+        List<PokemonDto> pokemon;
+        List<PokemonStatsDto> pokemonStats;
+
+        pokemon = await httpHelper.GetAsync<IEnumerable<PokemonDto>>($"/api/Pokemon") as List<PokemonDto>;
+        pokemonStats = await httpHelper.GetAsync<IEnumerable<PokemonStatsDto>>($"/api/PokemonStats") as List<PokemonStatsDto>;
+
+        _pokemonViewModel = pokemon.Select(x => new PokemonViewModel()
+        {
+            Pokemon = x,
+            PokemonStats = pokemonStats.FirstOrDefault(y => y.Id == x.Id)
+        }).OrderBy(x => x.Pokemon.Id).ToList();
+
+        var itemsToSkip = (PageId - 1) * 10;
+
+        _filteredPokemonViewModel = _pokemonViewModel;
+
+        _filteredPokemonViewModel = _filteredPokemonViewModel
+            .Skip((int)itemsToSkip)
+            .Take(10)
+            .ToList();
+    }
+
+    void OnSearch(string searchQuery)
+    {
+        if (!string.IsNullOrEmpty(searchQuery))
+            _filteredPokemonViewModel = _filteredPokemonViewModel
+                .Where(p => p.Pokemon.Name.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        else
+            _filteredPokemonViewModel = _pokemonViewModel;
+    }
+
+    void OnSort(Sort sort)
+    {
+        _pokemonViewModel = sort switch
+        {
+            Sort.Name => _pokemonViewModel.OrderBy(x => x.Pokemon.Name).ToList(),
+            Sort.Weight => _pokemonViewModel.OrderBy(x => x.PokemonStats.Weight).ToList(),
+            _ => _pokemonViewModel.OrderBy(x => x.Pokemon.Id).ToList()
+        };
+
+        var itemsToSkip = (PageId - 1) * 10;
+
+        _filteredPokemonViewModel = _pokemonViewModel
+            .Skip((int)itemsToSkip)
+            .Take(10)
+            .ToList();
     }
 
 }
@@ -15,43 +92,22 @@
 
 <HeaderImg Src="public/look.svg"/>
 
-<section class="w-100 border-top border-bottom border-dark">
-    <div class="d-flex justify-content-between btn-group">
-        <div class="d-flex col-6 col-md-4">
-            <form method="get" class="d-flex">
-                <input name="searchQuery" class="form-control shadow-none h-100 fs-4 border-0 fw-bolder text-black-50 border-end border-dark rounded-0" type="text" placeholder="Search here">
-            </form>
-        </div>
-        <div class="d-flex justify-content-between gap-5">
-            <p class="d-block my-auto">Model.PokemonCount products</p>
-            @{
-                // var sortName = Model.FilterQuery;
-                //
-                // if (string.IsNullOrEmpty(sortName))
-                //     sortName = "Id";
-                //
-                // sortName = sortName.First().ToString().ToUpper() + sortName[1..];
+@if (IsFailed)
+{
+    <p>Sorry, cannot connect to server.</p>
+}
 
-            }
-            <button type="button" class="btn rounded-0 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                Sort by: sortName
-            </button>
-            <ul class="dropdown-menu p-0 rounded-0">
-                <li>
-                    <a class="dropdown-item p-2 fst-italic" asp-page="Shop" asp-route-sort="id">Id</a>
-                </li>
-                <li>
-                    <a class="dropdown-item p-2 fst-italic" asp-page="Shop" asp-route-sort="name">Name</a>
-                </li>
-                <li>
-                    <a class="dropdown-item p-2 fst-italic" asp-page="Shop" asp-route-sort="weight">Weight</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+<section class="w-100 border-top border-bottom border-dark">
+    <QueryMenu SearchQueryEvent="@OnSearch" SortQueryEvent="@OnSort" ProductCount="@_pokemonViewModel.Count"/>
 </section>
 
 <div class="d-flex flex-wrap gap-1 m-0 w-100">
-
-    <PokemonCard/>
+    @foreach (var item in _filteredPokemonViewModel)
+    {
+        <PokemonCard PokemonId="@item.Pokemon.Id" PokemonName="@item.Pokemon.Name" PokemonWeight="@item.PokemonStats.Weight" SpriteUrl="@item.Pokemon.Sprite" UrlRedirect="/shop/itempage"/>
+    }
 </div>
+
+<br>
+
+<Pagination PageSize="10" CurrentPage="(int)PageId" PokemonCount="@_pokemonViewModel.Count()"/>

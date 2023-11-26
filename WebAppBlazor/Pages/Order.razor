@@ -1,0 +1,206 @@
+@page "/shop/order/"
+
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+@inject ILocalStorageService LocalStorage;
+
+@using Blazored.LocalStorage
+@using WebApplication1.Entities
+@using Newtonsoft.Json
+@using PokeShop.Shared.Dto
+@using WebAppBlazor.Services
+@using System.ComponentModel.DataAnnotations
+
+@layout EmptyLayout
+
+@code {
+    private List<BasketItem> BasketItems { get; set; } = new();
+    private List<PokemonDto> Pokemon { get; } = new();
+
+    class InputModel
+    {
+        [Required]
+        [MinLength(3)]
+        [StringLength(50)]
+        public string Country { get; set; }
+
+        [Required]
+        [MinLength(8)]
+        [StringLength(255)]
+        public string Address { get; set; }
+
+        [Required]
+        [StringLength(255)]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(16)]
+        [MinLength(15)]
+        public string CardNumber { get; set; }
+
+        [Required]
+        [StringLength(10)]
+        [MinLength(10)]
+        public string SocialSecurity { get; set; }
+    };
+
+    readonly InputModel _inputModel = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var serializedData = await LocalStorage.GetItemAsStringAsync("basket");
+
+        if (!string.IsNullOrEmpty(serializedData))
+            BasketItems = JsonConvert.DeserializeObject<List<BasketItem>>(serializedData);
+
+        var httpHelper = new HttpHelper(HttpClient);
+
+        foreach (var item in BasketItems)
+        {
+            var pokemon = await httpHelper.GetAsync<PokemonDto>($"/api/Pokemon/{item.PokemonId}");
+            Pokemon.Add(pokemon);
+        }
+    }
+
+    private async void OnSubmit()
+    {
+        // clear local storage
+        if (!BasketItems.Any())
+        {
+            NavigationManager.NavigateTo("/shop/");
+        }
+
+        await LocalStorage.SetItemAsync("basket", new List<BasketItem>());
+
+        // add to repo
+        var httpHelper = new HttpHelper(HttpClient);
+
+        await httpHelper.PostAsync<FlatOrderDto>($"/api/Order", new FlatOrderDto()
+        {
+            Email = _inputModel.Email,
+            CardDetails = _inputModel.CardNumber,
+            SocialSecurity = _inputModel.SocialSecurity,
+            Price = BasketItems.Select(x => x.Price).Sum(),
+            CustomerInformationDto = new CustomerInformationDto()
+            {
+                Address = _inputModel.Address,
+                Country = _inputModel.Country
+            },
+            OrderDate = DateTime.Now,
+            Pokemon = Pokemon
+        });
+
+        NavigationManager.NavigateTo("/shop/");
+    }
+
+    private void OnDelete(Guid id)
+    {
+        BasketItems = BasketItems.Where(x => x.Id != id).ToList();
+        LocalStorage.SetItemAsync("basket", BasketItems);
+    }
+
+    private PokemonDto GetPokemonWithBasketId(int pokemonId)
+    {
+        return Pokemon.FirstOrDefault(x => x.Id == pokemonId);
+    }
+
+}
+
+<PageTitle>ItemPage</PageTitle>
+
+<div class="container-fluid border-bottom border-dark m-0 p-0 overflow-hidden">
+    <div class="row w-auto me-0 border-bottom border-dark d-flex justify-content-end">
+        <a href="/shop/" class="btn-close p-4"></a>
+    </div>
+
+    <div class="row">
+        <div class="col-8 my-5">
+            <EditForm Model="_inputModel" OnValidSubmit="OnSubmit">
+                <DataAnnotationsValidator/>
+
+                <div class="w-75 gap-3 mx-auto d-flex flex-column">
+                    <div>
+                        <label class="form-label fs-4 fw-bolder">Country</label>
+                        <InputText placeholder="Country" required @bind-Value="_inputModel.Country" class="form-control rounded-0 p-2 border-dark" aria-describedby="countryHelp"/>
+                        <div id="countryHelp" class="form-text">We would never misuse your personal information.</div>
+                        <ValidationMessage For="@(() => _inputModel.Country)" class="fs-6 text-danger"/>
+                    </div>
+
+                    <div>
+                        <label class="form-label fs-4 fw-bolder">Address</label>
+                        <InputText placeholder="Address" required @bind-Value="_inputModel.Address" class="form-control rounded-0 p-2 border-dark"aria-describedby="addressHelp"/>
+                        <div id="addressHelp" class="form-text">We won't threaten you to release your address.</div>
+                        <ValidationMessage For="@(() => _inputModel.Address)" class="fs-6 text-danger"/>
+                    </div>
+
+                    <div>
+                        <label class="form-label fs-4 fw-bolder">E-Mail Address</label>
+                        <InputText placeholder="E-Mail" required @bind-Value="_inputModel.Email" type="email" class="form-control rounded-0 p-2 border-dark" aria-describedby="emailHelp"/>
+                        <div id="emailHelp" class="form-text">We'll try not to share your email with anyone else.</div>
+                        <ValidationMessage For="@(() => _inputModel.Email)" class="fs-6 text-danger"/>
+                    </div>
+
+                    <div>
+                        <label class="form-label fs-4 fw-bolder">Card Information</label>
+                        <InputText placeholder="Card Information" required @bind-Value="_inputModel.CardNumber" class="form-control rounded-0 p-2 border-dark" aria-describedby="cardHelp"/>
+                        <div id="cardHelp" class="form-text">Your card details are treated with the best that modern web-security offers.</div>
+                        <ValidationMessage For="@(() => _inputModel.CardNumber)" class="fs-6 text-danger"/>
+                    </div>
+
+                    <div>
+                        <label class="form-label fs-4 fw-bolder">Social-Security</label>
+                        <InputText placeholder="Social Security" required @bind-Value="_inputModel.SocialSecurity" class="form-control rounded-0 p-2 border-dark" aria-describedby="socialHelp"/>
+                        <div id="socialHelp" class="form-text">We are unhackable, your social-security is safe with us.</div>
+                        <ValidationMessage For="@(() => _inputModel.SocialSecurity)" class="fs-6 text-danger"/>
+                    </div>
+
+                    <div class="mt-auto">
+                        <input class="btn btn-dark rounded-0 w-100" type="submit" value="Buy now!">
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+
+        <div class="d-flex flex-column col-4 p-0 border-start border-dark scrollable">
+            <div class="border-bottom border-dark p-3">
+                <p class="my-auto fs-4 fw-bolder">Your basket</p>
+            </div>
+
+            <div>
+                @if (BasketItems.Count == 0)
+                {
+                    <p class="w-100 text-center my-3">...</p>
+                }
+
+                @foreach (var item in @BasketItems)
+                {
+                    <div class="container-md p-0">
+                        <div class="row m-0">
+                            <div class="col-md-4 p-0 ps-0 card text-bg-dark border-0 rounded-0">
+                                <img alt="..." src="@GetPokemonWithBasketId(item.PokemonId).Sprite" class="bg-light p-0 border-0"/>
+                                <div class="card-img-overlay">
+                                    <form @onsubmit="@(e => OnDelete(item.Id))">
+                                        <input type="hidden" name="Id" value="@item.Id"/>
+                                        <button type="submit" aria-label="deleteOrder" class="btn-close bg-white opacity-100 rounded-0 mx-auto p-1"></button>
+                                    </form>
+
+                                </div >
+                            </div >
+                            <div class="col-md-8 d-flex">
+                                <div class="py-md-3 my-auto">
+                                    <p class="fs-5 fw-bolder text-center text-md-start">@GetPokemonWithBasketId(item.PokemonId).Name</p>
+                                    <p class="fs-5 fw-bolder mb-0 mt-auto fst-italic text-center text-md-start text-decoration-underline" style="text-decoration-style: wavy;"> @item.Price.ToString("F1") </p >
+                                </div >
+                            </div >
+                        </div >
+                    </div>
+                }
+            </div>
+
+            <div class="p-3 border-top border-dark">
+                <TotalledPrice Price="@BasketItems.Sum(x => x.Price)"/>
+            </div>
+        </div>
+    </div>
+</div>

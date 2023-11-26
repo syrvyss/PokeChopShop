@@ -102,7 +102,7 @@ public class Pokemon_Tests
         // Act
         _repository.Add(pokemon1);
 
-        _repository.Delete(pokemon1);
+        _repository.Delete(pokemon1.Id);
 
         // Assert
         Assert.Empty(_repository.GetAll());

@@ -1,0 +1,181 @@
+@* @page "/admin/shop/itempage/" *@
+@* @page "/admin/shop/itempage/{Id:int}" *@
+
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+@inject ILocalStorageService LocalStorage;
+
+@using Blazored.LocalStorage
+@using Newtonsoft.Json
+@using PokeShop.Shared.Dto;
+@using WebAppBlazor.Entities
+@using WebAppBlazor.Services
+@using WebApplication1.Entities
+
+@code {
+    [Parameter] public int Id { get; set; }
+
+    bool newMode = false;
+
+    private PokemonViewModel _pokemonViewModel = new();
+
+    private double Weight { get; set; } = 0;
+    private List<BasketItem> BasketItems { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // var serializedData = await LocalStorage.GetItemAsStringAsync("basket");
+        //
+        // if (!string.IsNullOrEmpty(serializedData))
+        //     BasketItems = JsonConvert.DeserializeObject<List<BasketItem>>(serializedData);
+
+        if (Id == null)
+        {
+            newMode = true;
+        }
+        else
+        {
+            _pokemonViewModel = await GetPokemonInformation();
+        }
+    }
+
+    async Task<PokemonViewModel> GetPokemonInformation()
+    {
+        var httpHelper = new HttpHelper(HttpClient);
+
+        var pokemon = await httpHelper.GetAsync<PokemonDto>($"/api/Pokemon/{Id}");
+        var pokemonStats = await httpHelper.GetAsync<PokemonStatsDto>($"/api/PokemonStats/{Id}");
+
+        return new PokemonViewModel()
+        {
+            Pokemon = pokemon,
+            PokemonStats = pokemonStats
+        };
+    }
+
+    private async void OnSubmit()
+    {
+        BasketItems.Add(new BasketItem()
+        {
+            PokemonId = Id,
+            Price = _pokemonViewModel.PokemonStats.Weight * (Weight / 3.0)
+        });
+
+        await LocalStorage.SetItemAsync("basket", BasketItems);
+
+        NavigationManager.NavigateTo("/shop/order/");
+    }
+
+}
+
+<PageTitle>ItemPage</PageTitle>
+
+<section class="container-fluid vh-100">
+    <div class="row vh-100">
+        <div class="col-md-8">
+            <img class="w-100 bg-light rounded" src="@_pokemonViewModel.Pokemon.Sprite" alt="">
+        </div>
+        <div class="col-md-4 d-flex flex-column gap-4">
+            <EditForm Model="_pokemonViewModel">
+                <DataAnnotationsValidator/>
+                @* <h2 class="fs-1 fw-bolder">@_pokemonViewModel.Pokemon.Name</h2> *@
+                <div class="input-group">
+                    <span class="input-group-text fs-4">Name</span>
+                    <input asp-for="@_pokemonViewModel.Pokemon.Name" type="text" class="form-control fs-4" id="floatingInputValue" placeholder="Name" value="">
+                </div>
+
+                @* <EditForm Model="this" OnValidSubmit="OnSubmit" class="d-flex flex-column gap-2"> *@
+
+                <div>
+                    <label>Weight:</label>
+                    <div class="btn-group w-100">
+                        <input disabled type="radio" required @onchange="@(() => Weight = 1)" class="btn-check" id="weightOption1" name="weightOptions" autocomplete="off">
+                        <label class="btn btn-outline-dark rounded-0" for="weightOption1">1/3</label>
+
+                        <input disabled type="radio" required @onchange="@(() => Weight = 2)" class="btn-check" id="weightOption2" name="weightOptions" autocomplete="off">
+                        <label class="btn btn-outline-dark rounded-0" for="weightOption2">2/3</label>
+
+                        <input disabled type="radio" required @onchange="@(() => Weight = 3)" class="btn-check" id="weightOption3" name="weightOptions" autocomplete="off">
+                        <label class="btn btn-outline-dark rounded-0" for="weightOption3">3/3</label>
+                    </div>
+
+                    <input class="btn btn-dark rounded-0 w-100" type="submit" value="Submit!">
+
+                    <label class="form-label">Price is based on weight, one ¥ per gram.</label>
+                    @* <ValidationMessage For="@(() => Weight)"/> *@
+                </div>
+                @* </EditForm> *@
+
+                <div class="accordion" id="accordionDetails">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Product Details
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionDetails">
+                            <div class="accordion-body d-flex flex-wrap gap-2">
+                                <p class="col-lg-5 flex-grow-1 d-flex flex-column">
+                                    <div class="input-group">
+                                        <span class="input-group-text">Sprite</span>
+                                        @* <input @bind="@_pokemonViewModel.PokemonStats.Experience" type="number" class="form-control fs-4" placeholder="@_pokemonViewModel.PokemonStats.Experience" value=""> *@
+                                        <InputText @bind="@_pokemonViewModel.Pokemon.Sprite" class="form-control fs-4" placeholder="@_pokemonViewModel.Pokemon.Sprite"/>
+                                    </div>
+                                    <div class="input-group">
+
+                                        <span class="input-group-text">Experience</span>
+                                        <strong>Experience</strong> @_pokemonViewModel.PokemonStats.Experience
+                                        @* <input @bind="@_pokemonViewModel.PokemonStats.Experience" type="number" class="form-control fs-4" placeholder="@_pokemonViewModel.PokemonStats.Experience" value=""> *@
+                                        <InputNumber @bind="@_pokemonViewModel.PokemonStats.Experience" TValue="int" class="form-control fs-4" placeholder="@_pokemonViewModel.PokemonStats.Experience" value="@_pokemonViewModel.PokemonStats.Experience"/>
+                                    </div>
+                                </p>
+                                <p class="col-lg-5 flex-grow-1 d-flex flex-column">
+                                    <div class="input-group">
+                                        <span class="input-group-text">Height</span>
+                                        <strong>Height</strong> @_pokemonViewModel.PokemonStats.Height
+                                        @* <input @bind="@_pokemonViewModel.PokemonStats.Height" type="number" class="form-control fs-4" placeholder="@_pokemonViewModel.PokemonStats.Height" value=""> *@
+                                        <InputNumber @bind="@_pokemonViewModel.PokemonStats.Height" TValue="int" class="form-control fs-4" placeholder="@_pokemonViewModel.PokemonStats.Height" value="@_pokemonViewModel.PokemonStats.Height"/>
+                                    </div>
+                                </p>
+                                <p class="col-lg-5 flex-grow-1 d-flex flex-column">
+                                    <div class="input-group">
+                                        <span class="input-group-text">Weight</span>
+                                        <strong>Weight</strong> @_pokemonViewModel.PokemonStats.Weight
+                                        @* <input @bind="@_pokemonViewModel.PokemonStats.Weight" type="number" class="form-control fs-4" placeholder="@_pokemonViewModel.PokemonStats.Weight" value=""> *@
+                                        <InputNumber @bind="@_pokemonViewModel.PokemonStats.Weight" TValue="int" class="form-control fs-4" placeholder="@_pokemonViewModel.PokemonStats.Weight" value="@_pokemonViewModel.PokemonStats.Weight"/>
+                                    </div>
+                                </p>
+                                <p class="col-lg-5 flex-grow-1 d-flex flex-column">
+                                    <div class="input-group">
+                                        <span class="input-group-text">Description</span>
+                                        <strong>Description</strong> @_pokemonViewModel.PokemonStats.Description
+                                        @* <input @bind="@_pokemonViewModel.PokemonStats.Description" type="text" class="form-control fs-4" placeholder="@_pokemonViewModel.PokemonStats.Description" value=""> *@
+                                        <InputText @bind="@_pokemonViewModel.PokemonStats.Description" class="form-control fs-4" placeholder="@_pokemonViewModel.PokemonStats.Description" value="@_pokemonViewModel.PokemonStats.Description"/>
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Payment & Shipping
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionDetails">
+                            <div class="accordion-body d-flex flex-wrap gap-2">
+                                <p class="col-lg-5 flex-grow-1 d-flex flex-column">
+                                    <strong>Payment</strong>We only accept crypto and other untraceable currencies.
+                                </p>
+                                <p type="tooltip" title="or however long it takes to arrive from china" class="col-lg-5 flex-grow-1 d-flex flex-column">
+                                    <strong >Shipping</strong>Our shipping can take as little as 2 days!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</section>

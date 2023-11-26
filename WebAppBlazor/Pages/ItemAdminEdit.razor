@@ -1,0 +1,137 @@
+@page "/admin/shop/itempage/{Id:int}"
+
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+
+@using WebAppBlazor.Entities
+@using WebAppBlazor.Services
+@using PokeShop.Shared.Dto
+
+@code {
+    [Parameter] public int Id { get; set; }
+
+    PokemonViewModel _pokemonViewModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var httpHelper = new HttpHelper(HttpClient);
+
+        var pokemon = await httpHelper.GetAsync<PokemonDto>($"/api/Pokemon/{Id}");
+        var pokemonStats = await httpHelper.GetAsync<PokemonStatsDto>($"/api/PokemonStats/{Id}");
+
+        _pokemonViewModel = new PokemonViewModel()
+        {
+            Pokemon = pokemon,
+            PokemonStats = pokemonStats
+        };
+    }
+
+    private async void OnSubmit()
+    {
+        var httpHelper = new HttpHelper(HttpClient);
+
+        await httpHelper.PutAsync<PokemonDto>($"/api/Pokemon/{Id}", _pokemonViewModel.Pokemon);
+        await httpHelper.PutAsync<PokemonStatsDto>($"/api/PokemonStats/{Id}", _pokemonViewModel.PokemonStats);
+
+        // await httpHelper.PostAsync<FlatOrderDto>($"/api/Order", new FlatOrderDto()
+        // {
+        //     Email = _pokemonViewModel.Email,
+        //     CardDetails = _pokemonViewModel.CardNumber,
+        //     SocialSecurity = _inputModel.SocialSecurity,
+        //     Price = BasketItems.Select(x => x.Price).Sum(),
+        //     CustomerInformationDto = new CustomerInformationDto()
+        //     {
+        //         Address = _inputModel.Address,
+        //         Country = _inputModel.Country
+        //     },
+        //     OrderDate = DateTime.Now,
+        //     Pokemon = Pokemon
+        // });
+
+        NavigationManager.NavigateTo("/admin");
+    }
+
+}
+
+<body class="mb-0">
+<section class="container-fluid vh-100">
+    <div class="row vh-100">
+        <div class="col-md-8">
+            <img class="w-100 bg-light rounded" src="@_pokemonViewModel.Pokemon.Sprite" alt="">
+        </div>
+        <div class="col-md-4 d-flex flex-column gap-4">
+            <EditForm Model="_pokemonViewModel" class="d-flex flex-column gap-2" OnSubmit="@OnSubmit">
+
+                <div class="input-group">
+                    <span class="input-group-text fs-4">Name</span>
+                    <InputText @bind-Value="@_pokemonViewModel.Pokemon.Name" class="form-control fs-4" id="floatingInputValue" placeholder="Name"/>
+                </div>
+
+                <label class="form-label fw-bolder">Weight:</label>
+                <div class="btn-group w-100">
+                    <input disabled type="radio" value="1" class="btn-check" id="weightOption1" autocomplete="off">
+                    <label class="btn btn-outline-dark rounded-0" for="weightOption1">1/3</label>
+
+                    <input disabled type="radio" value="2" class="btn-check" id="weightOption2" autocomplete="off">
+                    <label class="btn btn-outline-dark rounded-0" for="weightOption2">2/3</label>
+
+                    <input disabled type="radio" value="3" class="btn-check" id="weightOption3" autocomplete="off">
+                    <label class="btn btn-outline-dark rounded-0" for="weightOption3">3/3</label>
+                </div>
+
+                <input class="btn btn-dark rounded-0 w-100" type="submit" value="Submit!">
+
+                <label class="form-label">Price is based off weight, one ¥ per gram.</label>
+
+                <div class="accordion" id="accordionDetails">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Product Details
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionDetails">
+                            <div class="accordion-body d-flex flex-wrap gap-2">
+                                <div class="input-group">
+                                    <span class="input-group-text">Experience</span>
+                                    <InputNumber @bind-Value="@_pokemonViewModel.PokemonStats.Experience" TValue="int" class="form-control fs-4" placeholder="Experience"/>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text">Height</span>
+                                    <InputNumber @bind-Value="@_pokemonViewModel.PokemonStats.Height" TValue="int" type="number" class="form-control fs-4" placeholder="Height"/>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text">Weight</span>
+                                    <InputNumber @bind-Value="@_pokemonViewModel.PokemonStats.Weight" TValue="int" type="number" class="form-control fs-4" placeholder="Weight"/>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text">Description</span>
+                                    <InputText @bind-Value="@_pokemonViewModel.PokemonStats.Description" TValue="int" type="text" class="form-control fs-4" placeholder="Description"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Payment & Shipping
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionDetails">
+                            <div class="accordion-body d-flex flex-wrap gap-2">
+                                <p class="col-lg-5 flex-grow-1 d-flex flex-column">
+                                    <strong>Payment</strong>We only accept crypto and other untraceable currencies.
+                                </p>
+                                <p type="tooltip" title="or however long it takes to arrive from china" class="col-lg-5 flex-grow-1 d-flex flex-column">
+                                    <strong >Shipping</strong>Our shipping can take as little as 2 days!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </EditForm>
+
+        </div>
+    </div>
+</section>
+</body>

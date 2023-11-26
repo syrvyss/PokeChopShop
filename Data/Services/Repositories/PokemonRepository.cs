@@ -18,6 +18,32 @@ public class PokemonRepository : BaseRepository<Pokemon>, IPokemonRepository
             .FirstOrDefault();
     }
 
+    public List<Pokemon> GetFullAll()
+    {
+        return _context.Pokemon
+            .Include(x => x.PokemonStats)
+            .ToList();
+    }
+
+    public void UpdateEntity(Pokemon pokemon)
+    {
+        var existingPokemon = _context.Pokemon.Find(pokemon.Id);
+
+        if (existingPokemon != null)
+        {
+            // Check if existing
+            if (_context.ChangeTracker.Entries<Pokemon>().Any(e => e.Entity.Id == existingPokemon.Id))
+                _context.Entry(existingPokemon).State = EntityState.Detached;
+
+            _context.Update(pokemon);
+            _context.SaveChanges();
+        }
+        else
+        {
+            throw new InvalidOperationException($"Pokemon with Id {pokemon.Id} not found.");
+        }
+    }
+
     public IEnumerable<Pokemon> GetItemsOnPage(int pageNumber, int pageSize, string? filterQuery, string? searchQuery)
     {
         // Calculate the number of items to skip based on the page number and size

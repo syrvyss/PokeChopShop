@@ -33,9 +33,13 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         _context.SaveChanges();
     }
 
-    public void Delete(T entity)
+    public void Delete(int id)
     {
-        _context.Set<T>().Remove(entity);
+        var entityToDelete = _context.Set<T>().Find(id);
+
+        if (entityToDelete == null) return;
+
+        _context.Set<T>().Remove(entityToDelete);
         _context.SaveChanges();
     }
 }

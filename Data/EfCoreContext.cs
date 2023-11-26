@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Text.Json;
-using Data.Entities;
+﻿using Data.Entities;
 using Data.Utility;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -8,18 +6,18 @@ using Microsoft.Extensions.Logging;
 
 namespace Data;
 
-public class EfCoreContextFactory : IDesignTimeDbContextFactory<EfCoreContext>
-{
-    public EfCoreContext CreateDbContext(string[] args)
-    {
-        var builder = new DbContextOptionsBuilder<EfCoreContext>();
-        builder
-            .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
-            .UseNpgsql(
-                "Host=localhost;Database=postgres;Username=dkNikLue;Password=12345");
-        return new EfCoreContext(builder.Options);
-    }
-}
+// public class EfCoreContextFactory : IDesignTimeDbContextFactory<EfCoreContext>
+// {
+//     public EfCoreContext CreateDbContext(string[] args)
+//     {
+//         var builder = new DbContextOptionsBuilder<EfCoreContext>();
+//         builder
+//             .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
+//             .UseNpgsql(
+//                 "Host=localhost;Database=postgres;Username=dkNikLue;Password=12345");
+//         return new EfCoreContext(builder.Options);
+//     }
+// }
 
 public class EfCoreContext : DbContext
 {

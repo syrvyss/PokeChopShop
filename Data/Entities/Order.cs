@@ -1,11 +1,10 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Entities;
 
 public class Order
 {
-    public int Id { get; set; }
+    [Key] public int Id { get; set; }
 
     // Unencrypted plain-text personal information in strings,
     // taught by the very best (IT-Center Syd)

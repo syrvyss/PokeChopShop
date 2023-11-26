@@ -1,0 +1,39 @@
+@code {
+    [Parameter] public int? PageSize { get; set; } = 10;
+    [Parameter] public int CurrentPage { get; set; }
+    [Parameter] public int PokemonCount { get; set; }
+
+    [Inject] private NavigationManager NavigationManager { get; set; }
+
+    bool canBack;
+    bool canForward;
+    int forwardLink;
+    int backLink;
+
+    protected override void OnInitialized()
+    {
+        canBack = CurrentPage > 1;
+        forwardLink = (int)(CurrentPage + 1);
+        backLink = (int)(CurrentPage - 1);
+    }
+
+    private void NavigateToPage(int pageId)
+    {
+        NavigationManager.NavigateTo($"/shop/{pageId}", true);
+    }
+
+}
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="@(CurrentPage == 1 ? "bg-black text-white" : "") page-link text-black" @onclick="() => NavigateToPage(1)">1</a>
+        </li>
+        @for (var i = 0; i < PokemonCount / 10; i++)
+        {
+            <li class="page-item">
+                <a class="page-link text-black @(CurrentPage == i + 1 ? "" : "bg-black text-white")" @onclick="() => NavigateToPage(i + 1)">@(i + 2)</a>
+            </li>
+        }
+    </ul>
+</nav>

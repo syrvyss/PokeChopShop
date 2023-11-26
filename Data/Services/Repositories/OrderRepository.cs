@@ -18,4 +18,12 @@ public class OrderRepository : BaseRepository<Order>, IOrderRepository
             .Include(o => o.CustomerInformation)
             .FirstOrDefault();
     }
+
+    public List<Order> GetFullAll()
+    {
+        return _context.Orders
+            .Include(x => x.Pokemon)
+            .Include(x => x.CustomerInformation)
+            .ToList();
+    }
 }

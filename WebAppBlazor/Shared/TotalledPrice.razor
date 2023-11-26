@@ -5,7 +5,7 @@
     double _taxes;
     double _total;
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
         _shipping = Price * 0.125;
         _taxes = Price * 0.25;

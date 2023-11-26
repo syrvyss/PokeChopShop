@@ -2,10 +2,8 @@ using Data.Entities;
 using Data.Services.Repositories;
 using Data.Utility;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Npgsql.PostgresTypes;
 
-namespace UnitTests;
+namespace UnitTests.UnitTests;
 
 public class Pokemon_Tests
 {

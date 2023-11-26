@@ -2,7 +2,7 @@ using Data.Entities;
 using Data.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace UnitTests;
+namespace UnitTests.UnitTests;
 
 public class Order_Tests
 {

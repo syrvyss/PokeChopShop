@@ -1,6 +1,3 @@
-using Data;
-using Data.Entities;
-using Data.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAppAPI.Controllers;
@@ -9,17 +6,21 @@ namespace WebAppAPI.Controllers;
 [ApiController]
 public abstract class BaseController<T> : ControllerBase where T : class
 {
-    private readonly IBaseRepository<T> _repository;
+    protected readonly Logic.Controllers.IBaseController<T> _controller;
 
-    protected BaseController(IBaseRepository<T> repository)
+    protected BaseController()
     {
-        _repository = repository;
+    }
+
+    protected BaseController(Logic.Controllers.IBaseController<T> controller)
+    {
+        _controller = controller;
     }
 
     [HttpGet("{id}")]
     public ActionResult<T> GetById(int id)
     {
-        var entity = _repository.GetById(id);
+        var entity = _controller.GetById(id);
         if (entity == null) return NotFound();
 
         return entity;
@@ -28,7 +29,7 @@ public abstract class BaseController<T> : ControllerBase where T : class
     [HttpGet]
     public ActionResult<IEnumerable<T>> GetAll()
     {
-        var entities = _repository.GetAll();
+        var entities = _controller.GetAll();
         return Ok(entities);
     }
 
@@ -37,7 +38,7 @@ public abstract class BaseController<T> : ControllerBase where T : class
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
-        _repository.Add(entity);
+        _controller.Add(entity);
 
         return Ok();
     }
@@ -45,11 +46,11 @@ public abstract class BaseController<T> : ControllerBase where T : class
     [HttpPut("{id}")]
     public IActionResult Update(int id, T entity)
     {
-        var existingEntity = _repository.GetById(id);
+        var existingEntity = _controller.GetById(id);
 
         if (existingEntity == null) return NotFound();
 
-        _repository.Update(entity);
+        _controller.Update(entity);
 
         return NoContent();
     }
@@ -57,10 +58,10 @@ public abstract class BaseController<T> : ControllerBase where T : class
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var entity = _repository.GetById(id);
+        var entity = _controller.GetById(id);
         if (entity == null) return NotFound();
 
-        _repository.Delete(entity);
+        _controller.Delete(id);
 
         return NoContent();
     }

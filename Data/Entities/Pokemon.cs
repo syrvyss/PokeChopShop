@@ -4,12 +4,11 @@ namespace Data.Entities;
 
 public class Pokemon
 {
+    [Key]
     public int Id { get; set; }
 
     [Required] public string Name { get; set; }
-
     [Required] public required string Sprite { get; set; }
-
     [Required] public int Quantity { get; set; }
 
     // Navigation

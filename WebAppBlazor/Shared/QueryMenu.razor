@@ -1,0 +1,37 @@
+@using WebAppBlazor.Entities
+@using WebAppBlazor.Services
+
+@code {
+    [Parameter] public EventCallback<string> SearchQueryEvent { get; set; }
+    [Parameter] public EventCallback<Sort> SortQueryEvent { get; set; }
+    [Parameter] public int ProductCount { get; set; }
+
+    string CurrentStringQuery { get; set; } = "";
+    Sort CurrentSortQuery { get; set; } = Sort.Id;
+
+    void OnSearch()
+    {
+        SearchQueryEvent.InvokeAsync(CurrentStringQuery);
+    }
+
+    void OnSort()
+    {
+        SortQueryEvent.InvokeAsync(CurrentSortQuery);
+    }
+
+}
+
+<div class="d-flex justify-content-between btn-group">
+    <div class="d-flex col-6 col-md-4">
+        <form method="get" @onsubmit="@OnSearch">
+            <InputText @bind-Value="@CurrentStringQuery" class="form-control shadow-none h-100 fs-4 border-0 fw-bolder text-black-50 border-end border-dark rounded-0" placeholder="Search here"/>
+        </form>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <label class="my-auto">Sort</label>
+        <button class="btn @(CurrentSortQuery == Sort.Id ? "fw-bold" : "")" @onclick="() => { CurrentSortQuery = Sort.Id; OnSort(); }">Id</button>
+        <button class="btn @(CurrentSortQuery == Sort.Name ? "fw-bold" : "")" @onclick="() => { CurrentSortQuery = Sort.Name; OnSort(); }">Name</button>
+        <button class="btn @(CurrentSortQuery == Sort.Weight ? "fw-bold" : "")" @onclick="() => { CurrentSortQuery = Sort.Weight; OnSort(); }">Weight</button>
+    </div>
+</div>

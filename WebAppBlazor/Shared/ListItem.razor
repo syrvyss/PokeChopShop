@@ -1,0 +1,23 @@
+@code {
+    [Parameter] public EventCallback<int> DeleteItem { get; set; }
+
+    [Parameter] public string Link { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public int Id { get; set; }
+
+    void OnDelete()
+    {
+        DeleteItem.InvokeAsync(Id);
+    }
+
+}
+
+<div class="d-flex justify-content-between border-top border-dark border-start border-end">
+    <a href="@Link" class="w-100 text-decoration-none d-flex justify-content-between">
+        <ul class="list-group">
+            <li class="list-group-item border-0 d-block my-auto">@Title</li>
+        </ul>
+    </a>
+
+    <button @onclick="OnDelete" aria-label="CloseButton" class="btn-close mx-auto p-3"></button>
+</div>
